@@ -39,12 +39,20 @@ governance, approval, execution boundaries, rollback requirements, and audit.
 
 ## Demo
 
-Static demo: https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+Static demo artifact: `docs/demo/index.html`
 
-The demo is a hosted, static snapshot of the operator console. It demonstrates
+Reserved hosted URL:
+https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+
+The demo artifact is a static snapshot of the operator console. It demonstrates
 the governed workflow and maturity boundary without connecting to live services
-or infrastructure. The demo URL is stored in `DEMO_URL` and is validated by the
-release gates so future updates keep this link current.
+or infrastructure. The hosted URL is stored in `DEMO_URL`, and the current
+publication state is stored in `DEMO_STATUS`. Release gates validate both so
+future updates keep the demo reference current.
+
+Current publication state: `pending-pages-deployment`. The hosted URL should
+not be treated as live until GitHub Pages deploys successfully from the public
+repository.
 
 ## Repository Layout
 

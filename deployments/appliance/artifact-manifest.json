@@ -62,9 +62,9 @@
       "sha256": "c4b92aa58dc55f9eb29d4542d4ae1ab453cba4be02809381aac15109ff47085a"
     },
     {
-      "bytes": 1123,
+      "bytes": 1307,
       "path": "CHANGELOG.md",
-      "sha256": "559f6b05874f3810b496a22a64dba654dac10b61552bb3c237fafb89f31220f5"
+      "sha256": "ab52a165d6713135c1b8aa4ebd672524290c3e8ac0c203c18b6b938719ec47a8"
     },
     {
       "bytes": 1701,
@@ -75,6 +75,11 @@
       "bytes": 897,
       "path": "CONTRIBUTING.md",
       "sha256": "5117788614ab20319a434d8e62b6730723e2b4a756680c12f47b7d02a39b3210"
+    },
+    {
+      "bytes": 25,
+      "path": "DEMO_STATUS",
+      "sha256": "8d2a248251dfc9448a4efe204afaeb6d2ef12e05095f8ea3e6a25edc9ebbcd06"
     },
     {
       "bytes": 68,
@@ -94,7 +99,7 @@
     {
       "bytes": 931,
       "path": "deployments/appliance/image-build-plan.json",
-      "sha256": "5d59a2fed4577ec93a0128452839ac8cb668c5c816a08d4abd6e1403bb8ab723"
+      "sha256": "1a2a6494cddfc096fe4700a0179dbdf404e11236e53888b4197c0fc6bb48fe62"
     },
     {
       "bytes": 654,
@@ -104,7 +109,7 @@
     {
       "bytes": 765,
       "path": "deployments/appliance/sbom.json",
-      "sha256": "e45e064d24651c4e14705ff57bd27e354707744c75a22fb8f69dfe0b9d940cce"
+      "sha256": "2b59e01f844cc1541096e7156dd03b25adabfdc129b760a0bc512a3799fae973"
     },
     {
       "bytes": 313,
@@ -172,9 +177,9 @@
       "sha256": "dbc8cad2125f492663947c6a14feded796c13903077ec613bb3aa63f53d94711"
     },
     {
-      "bytes": 1073,
+      "bytes": 1392,
       "path": "docs/operations/phase-10-15-implementation.md",
-      "sha256": "dbb1b0311ac7ce3dc4a83c7d311db41a6b8e0ba6301f75b0bf591f92120d81cc"
+      "sha256": "d08334450df50b0876f410783721f56db50e966df8b44f4978f514d701a20bce"
     },
     {
       "bytes": 294,
@@ -182,9 +187,9 @@
       "sha256": "df0066ac57cd321fee467c7a0f2f256a2b34d7d9be534046919ca5154a4a9ecb"
     },
     {
-      "bytes": 1752,
+      "bytes": 1944,
       "path": "docs/release/RELEASE_NOTES.md",
-      "sha256": "c393d1565f2496d0f452431e6d1349ec1d4c577f8880ca010fcb62ef7921a08f"
+      "sha256": "c00c53497295a8eee4929ab54fa8763a9377b85849c2aa709c90c639d2b6417c"
     },
     {
       "bytes": 217,
@@ -222,14 +227,19 @@
       "sha256": "517071601cb1639103bed6b910021ea253f152fa4712ee821f88caae6979dd5f"
     },
     {
+      "bytes": 1112,
+      "path": "PUBLICATION.md",
+      "sha256": "a33cee20e40c4a0edd9c1249ecc1129e9361765aa44c07cb58c9dc4448e3e374"
+    },
+    {
       "bytes": 366,
       "path": "pyproject.toml",
       "sha256": "e65d6c2f613c5cefe309a7dff859ab5023424ca45dac2efd829eb42b0d25ea9f"
     },
     {
-      "bytes": 3935,
+      "bytes": 4223,
       "path": "README.md",
-      "sha256": "077d25f275c0cab72d688c0af765d37ffe4603f56189d72a744b15a6b5c0583e"
+      "sha256": "94c78a622aff5680fbc8c094aed1b8c38f70d3e54d688561e84784fb82813ef3"
     },
     {
       "bytes": 1021,
@@ -272,14 +282,14 @@
       "sha256": "1bc6ee4589b7fc6ba07d7f78a1db31752c6040c278679bc88d934769a7c87ac8"
     },
     {
-      "bytes": 1072,
+      "bytes": 1611,
       "path": "scripts/validate_demo_link.py",
-      "sha256": "c5d8a2c1435b16c6c15de66f30848aaf4b8b3ea1ef15b1d75b9f14058d5bc5db"
+      "sha256": "4630893629bfb8b52076835cdf950709bee165aacd8ef3105032a0fa6084993a"
     },
     {
-      "bytes": 4635,
+      "bytes": 4676,
       "path": "scripts/validate_repository.py",
-      "sha256": "2521a9e4978a5273ba2f2aeab77d589a885ac55797a15ea207594d31be41ca78"
+      "sha256": "f803d3db2f4872d8e60ead49f1536c710b0457c8a2e86bb35248bced2a366880"
     },
     {
       "bytes": 687,
@@ -512,9 +522,9 @@
       "sha256": "9d9980d4597190af23fd5f64c3c68466ec0a54e15b34b1d99d15f9d5c105e5e3"
     },
     {
-      "bytes": 1931,
+      "bytes": 2250,
       "path": "tests/test_phase_10_15_static.py",
-      "sha256": "33de4b017a7301e02dff383d0c6bfcc812e701791a585c8a252dca30862051f5"
+      "sha256": "6e96711b374362e78b8481f3e995dc53d62cf514c3012e713776796b6858935e"
     },
     {
       "bytes": 3381,
@@ -552,5 +562,5 @@
       "sha256": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9"
     }
   ],
-  "generated_at": "2026-08-26T15:22:49.300343+00:00"
+  "generated_at": "2026-08-26T17:28:56.447768+00:00"
 }

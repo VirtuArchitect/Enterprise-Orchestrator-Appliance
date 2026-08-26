@@ -11,8 +11,11 @@
 - Added AHV/RHEL appliance image-build planning artifact.
 - Added Phase 15 release gates for metadata generation, tests, smoke checks,
   public hygiene scanning, Docker Compose validation, and diff hygiene.
-- Added static demo publication workflow and demo-link validation:
+- Added static demo artifact, reserved hosted URL, and demo-link validation:
   https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+- Recorded demo publication state as `pending-pages-deployment` until GitHub
+  Pages deploys successfully from the public repository.
+- Added a public publication checklist.
 
 ## 0.1.0 - 2026-08-26
 

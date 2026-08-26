@@ -12,6 +12,9 @@ release-candidate control surface without claiming production validation.
 - Phase 14: AHV/RHEL image build plan generator.
 - Phase 15: release-gate script covering metadata generation, validation, tests,
   smoke checks, public hygiene scan, and diff hygiene.
+- Demo control: `DEMO_URL`, `DEMO_STATUS`, and `docs/demo/index.html` keep the
+  static demo reference aligned with release documentation.
+  Reserved URL: https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
 
 ## Not Claimed
 
@@ -20,3 +23,5 @@ release-candidate control surface without claiming production validation.
 - The image build plan is not a produced or validated QCOW2 artifact.
 - Release gates are project hygiene controls, not penetration testing,
   certification, or production assurance.
+- The reserved hosted demo URL is not live while `DEMO_STATUS` is
+  `pending-pages-deployment`.
