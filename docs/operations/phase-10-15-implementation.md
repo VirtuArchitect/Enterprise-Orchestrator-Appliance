@@ -23,5 +23,4 @@ release-candidate control surface without claiming production validation.
 - The image build plan is not a produced or validated QCOW2 artifact.
 - Release gates are project hygiene controls, not penetration testing,
   certification, or production assurance.
-- The reserved hosted demo URL is not live while `DEMO_STATUS` is
-  `pending-pages-deployment`.
+- The hosted demo is static only and does not connect to live infrastructure.

@@ -9,7 +9,7 @@ handoff scaffolding, image-build planning, and release-gate automation.
 Demo:
 
 - https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
-- Status: `pending-pages-deployment`
+- Status: `live`
 - Static artifact: `docs/demo/index.html`
 
 Validated:
@@ -31,8 +31,7 @@ Boundaries:
 - EAAP handoff remains plan-only and does not execute infrastructure changes.
 - No QCOW2, installer, or air-gapped appliance image has been produced.
 - Release gates are project controls, not a security certification.
-- The reserved hosted demo URL is not live until GitHub Pages deploys
-  successfully from the public repository.
+- The hosted demo is static only and does not connect to live infrastructure.
 
 ## 0.1.0 Local MVP
 

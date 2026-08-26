@@ -13,9 +13,10 @@
   public hygiene scanning, Docker Compose validation, and diff hygiene.
 - Added static demo artifact, reserved hosted URL, and demo-link validation:
   https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
-- Recorded demo publication state as `pending-pages-deployment` until GitHub
-  Pages deploys successfully from the public repository.
+- Recorded demo publication state as `live` after GitHub Pages deployment
+  succeeded.
 - Added a public publication checklist.
+- Added manual CI dispatch support for public-readiness verification.
 
 ## 0.1.0 - 2026-08-26
 

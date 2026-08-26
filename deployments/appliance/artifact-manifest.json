@@ -42,9 +42,9 @@
       "sha256": "cc43ab53df8d97f2d9116910b294555ca6679c32d693b1c853c83030454760ba"
     },
     {
-      "bytes": 1318,
+      "bytes": 1339,
       "path": ".github/workflows/ci.yml",
-      "sha256": "be5d8f176715617e68df29c96d5dc67904930598a15b9ee4b000dc8d780cc48c"
+      "sha256": "8856cad4c51b2919520bbe4b23210c6cb7ee5ea3e7dff98138c81d2d8c23f269"
     },
     {
       "bytes": 725,
@@ -62,9 +62,9 @@
       "sha256": "c4b92aa58dc55f9eb29d4542d4ae1ab453cba4be02809381aac15109ff47085a"
     },
     {
-      "bytes": 1307,
+      "bytes": 1330,
       "path": "CHANGELOG.md",
-      "sha256": "ab52a165d6713135c1b8aa4ebd672524290c3e8ac0c203c18b6b938719ec47a8"
+      "sha256": "665fcb926650e768d898894c1d1fe59c4c635438123b22eed1941d1391f649e9"
     },
     {
       "bytes": 1701,
@@ -77,9 +77,9 @@
       "sha256": "5117788614ab20319a434d8e62b6730723e2b4a756680c12f47b7d02a39b3210"
     },
     {
-      "bytes": 25,
+      "bytes": 5,
       "path": "DEMO_STATUS",
-      "sha256": "8d2a248251dfc9448a4efe204afaeb6d2ef12e05095f8ea3e6a25edc9ebbcd06"
+      "sha256": "7a0c3ac0d35f7d3b985ef0e678fab3f36ef28c158cc62d095183e9589d084ae5"
     },
     {
       "bytes": 68,
@@ -99,7 +99,7 @@
     {
       "bytes": 931,
       "path": "deployments/appliance/image-build-plan.json",
-      "sha256": "1a2a6494cddfc096fe4700a0179dbdf404e11236e53888b4197c0fc6bb48fe62"
+      "sha256": "88ad393f45f6aaf24145c4df368df123f55102ea5cf9575d36ba0e9260cc1889"
     },
     {
       "bytes": 654,
@@ -109,7 +109,7 @@
     {
       "bytes": 765,
       "path": "deployments/appliance/sbom.json",
-      "sha256": "2b59e01f844cc1541096e7156dd03b25adabfdc129b760a0bc512a3799fae973"
+      "sha256": "f3a0fd332d13cf84d16489034833135b9f9eab27bc633231452d5b87db7c65cc"
     },
     {
       "bytes": 313,
@@ -177,9 +177,9 @@
       "sha256": "dbc8cad2125f492663947c6a14feded796c13903077ec613bb3aa63f53d94711"
     },
     {
-      "bytes": 1392,
+      "bytes": 1374,
       "path": "docs/operations/phase-10-15-implementation.md",
-      "sha256": "d08334450df50b0876f410783721f56db50e966df8b44f4978f514d701a20bce"
+      "sha256": "7d244b762356f618a83c53559f43962f26d0d5bcfa806fe2bbad58de5514f37e"
     },
     {
       "bytes": 294,
@@ -187,9 +187,9 @@
       "sha256": "df0066ac57cd321fee467c7a0f2f256a2b34d7d9be534046919ca5154a4a9ecb"
     },
     {
-      "bytes": 1944,
+      "bytes": 1889,
       "path": "docs/release/RELEASE_NOTES.md",
-      "sha256": "c00c53497295a8eee4929ab54fa8763a9377b85849c2aa709c90c639d2b6417c"
+      "sha256": "9ff26ac1df786c29ef52525780c6a8ae0380e2670d98ada3e841aae51c6ee15f"
     },
     {
       "bytes": 217,
@@ -237,9 +237,9 @@
       "sha256": "e65d6c2f613c5cefe309a7dff859ab5023424ca45dac2efd829eb42b0d25ea9f"
     },
     {
-      "bytes": 4223,
+      "bytes": 4090,
       "path": "README.md",
-      "sha256": "94c78a622aff5680fbc8c094aed1b8c38f70d3e54d688561e84784fb82813ef3"
+      "sha256": "efbda38cbf07728ef680afdd1d196cf8a753b62e0071027e856cd7e085f13640"
     },
     {
       "bytes": 1021,
@@ -562,5 +562,5 @@
       "sha256": "1f930dd1f133c1f97a94fe3acb8db34372cf4c01ffdb2b3ff4ca72f9494121e9"
     }
   ],
-  "generated_at": "2026-08-26T17:28:56.447768+00:00"
+  "generated_at": "2026-08-26T17:30:47.630947+00:00"
 }

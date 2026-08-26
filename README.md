@@ -50,9 +50,7 @@ or infrastructure. The hosted URL is stored in `DEMO_URL`, and the current
 publication state is stored in `DEMO_STATUS`. Release gates validate both so
 future updates keep the demo reference current.
 
-Current publication state: `pending-pages-deployment`. The hosted URL should
-not be treated as live until GitHub Pages deploys successfully from the public
-repository.
+Current publication state: `live`.
 
 ## Repository Layout
 
