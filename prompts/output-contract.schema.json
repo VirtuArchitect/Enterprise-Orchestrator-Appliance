@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://virtuarchitect.local/schemas/enterprise-orchestrator-output.json",
+  "title": "Enterprise Orchestrator Output Contract",
+  "type": "object",
+  "required": [
+    "summary",
+    "known",
+    "missing",
+    "required",
+    "domains",
+    "risk_tier",
+    "confidence",
+    "recommended_actions",
+    "validation",
+    "rollback",
+    "governance"
+  ],
+  "properties": {
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "known": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "risk_tier": {
+      "type": "string",
+      "enum": ["T0", "T1", "T2", "T3"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["Low", "Medium", "High"]
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "risk_tier", "requires_approval"],
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "risk_tier": {
+            "type": "string",
+            "enum": ["T0", "T1", "T2", "T3"]
+          },
+          "requires_approval": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "validation": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rollback": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "governance": {
+      "type": "object",
+      "required": ["direct_impact", "notes"],
+      "properties": {
+        "direct_impact": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

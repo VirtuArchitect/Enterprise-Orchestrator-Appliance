@@ -1,0 +1,46 @@
+# Architecture Overview
+
+Enterprise Orchestrator Appliance is an EAAP-aligned local operations appliance.
+It embeds a local LLM runtime behind deterministic governance and audit
+boundaries.
+
+## Core Boundary
+
+The model may reason, classify, summarize, and propose. It must not directly
+execute infrastructure actions. All execution-capable work must pass through
+governed APIs that enforce evidence, risk tier, approval, rollback, and audit.
+
+## Logical Components
+
+Component | Responsibility
+--- | ---
+Operator UI | Guided request intake, evidence capture, plan review, approval state, audit visibility
+Orchestrator API | Request classification, domain routing, output-contract validation, governance handoff
+LLM Adapter | Local model runtime abstraction for Ollama, llama.cpp, or future offline runtimes
+Evidence Service | Local document, log, and runbook ingestion with provenance tracking
+Approval Workflow | Human approval for actions above configured risk thresholds
+Execution Gateway | Sole interface for infrastructure-mutating connectors
+Audit Service | Immutable event trail for requests, decisions, approvals, execution, and validation
+Appliance API | Health, runtime config, backup, restore, update, and support-bundle surfaces
+
+## Default Request Flow
+
+```text
+Operator submits request
+  -> Orchestrator records request
+  -> Evidence service attaches available context
+  -> LLM adapter produces structured planning draft
+  -> Orchestrator validates output contract
+  -> Governance evaluates evidence, confidence, risk, and approval requirements
+  -> UI presents approval-ready plan or missing-evidence request
+  -> Approved actions route only through execution gateway
+  -> Audit records each state transition
+```
+
+## Air-Gapped Assumptions
+
+- Runtime must work without internet access.
+- Model artifacts, container images, packages, prompts, and schemas must be
+  transferred through controlled internal artifact paths.
+- Image tags and package versions must be pinned.
+- Checksums should be generated and validated at every transfer boundary.
