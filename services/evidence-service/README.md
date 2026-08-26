@@ -1,5 +1,16 @@
 # Evidence Service
 
-Planned service for local document, log, command-output, and runbook ingestion.
-Evidence must include source, timestamp, tenant or environment scope, and
-provenance metadata.
+Local evidence store for operator-provided documents, logs, command output, and
+runbook excerpts.
+
+Implemented:
+
+- JSON-backed local evidence records.
+- Tenant filtering.
+- Source, summary, classification, content, and timestamp metadata.
+
+Not implemented yet:
+
+- RAG/vector retrieval.
+- Signed evidence ingestion policy.
+- Large file parsing.

@@ -56,18 +56,18 @@ tests/                        Unit, integration, and smoke tests
 
 ## Current Status
 
-This repository is at foundation stage. See `STATUS.md` for the current maturity
-boundary and claims to avoid.
+This repository is at local MVP stage. See `STATUS.md` for the current maturity
+boundary and claims to avoid. The current implementation is dependency-free
+Python plus a static operator UI.
 
 ## First Milestones
 
-1. Define the prompt output contract and validation schema.
-2. Build a minimal orchestrator API that accepts a request and returns a
-   governed planning envelope.
-3. Add a local LLM adapter for Ollama or llama.cpp.
-4. Build the first operator UI flow: request intake, missing evidence, risk tier,
-   confidence, approval state, validation, and rollback.
-5. Add Docker Compose for local appliance development.
+1. Promote the stdlib API facade to FastAPI or equivalent when dependencies are
+   explicitly approved.
+2. Add signed evidence policy and vector retrieval.
+3. Add live EAAP control-plane service integration.
+4. Build and validate an actual AHV/RHEL appliance image.
+5. Replace local-only identity placeholders with an enterprise identity model.
 
 ## Verification
 
@@ -79,3 +79,24 @@ python scripts/validate_repository.py
 
 This check verifies that the first architecture, prompt, service, deployment,
 and governance files exist.
+
+Run the Phase 1 unit tests with:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m unittest discover -s tests
+```
+
+Run the local MVP smoke test with:
+
+```powershell
+$env:PYTHONPATH = "src"
+python scripts/smoke_app.py
+```
+
+Start the local operator console with:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m enterprise_orchestrator.app
+```

@@ -14,6 +14,8 @@ Thumbs.db
 # Logs
 *.log
 logs/
+.local-state/
+.local-state*/
 
 # Dependencies and builds
 node_modules/
@@ -27,4 +29,3 @@ __pycache__/
 target/
 bin/
 obj/
-

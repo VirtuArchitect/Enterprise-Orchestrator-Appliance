@@ -1,7 +1,15 @@
 # LLM Adapter
 
-Planned service boundary for local model runtimes.
+Local model runtime boundary.
 
-Initial target: Ollama.
+Implemented:
 
-Future targets: llama.cpp server and vLLM.
+- Ollama-compatible `/api/generate` client using standard-library HTTP.
+- `EOA_OLLAMA_URL` and `EOA_OLLAMA_MODEL` configuration.
+- Deterministic offline fallback planner for smoke tests and disconnected
+  appliances.
+
+Future targets:
+
+- llama.cpp server
+- vLLM

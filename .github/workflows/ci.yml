@@ -45,6 +45,14 @@ jobs:
         shell: bash
         run: python scripts/validate_repository.py
 
+      - name: Run unit tests
+        shell: bash
+        run: PYTHONPATH=src python -m unittest discover -s tests
+
+      - name: Run application smoke test
+        shell: bash
+        run: PYTHONPATH=src python scripts/smoke_app.py
+
   secret-scan:
     name: Secret scan
     runs-on: ubuntu-latest

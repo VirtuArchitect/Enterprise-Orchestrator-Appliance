@@ -1,0 +1,33 @@
+{
+  "bomFormat": "CycloneDX",
+  "components": [
+    {
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "60d9996b6a8a3689d36db740b49f4327be3be09a21122bd02fb8895abb38b50d"
+        }
+      ],
+      "name": "python",
+      "purl": "pkg:docker/python@3.12.7-slim",
+      "type": "container",
+      "version": "3.12.7-slim"
+    },
+    {
+      "name": "python-standard-library",
+      "scope": "required",
+      "type": "library",
+      "version": "3.12"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "name": "enterprise-orchestrator-appliance",
+      "type": "application",
+      "version": "0.1.0"
+    },
+    "timestamp": "2026-08-26T14:30:29.022815+00:00"
+  },
+  "specVersion": "1.5",
+  "version": 1
+}

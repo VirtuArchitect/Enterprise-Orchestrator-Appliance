@@ -1,0 +1,25 @@
+[Unit]
+Description=Enterprise Orchestrator Appliance
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=eoa
+Group=eoa
+Environment=PYTHONPATH=/opt/enterprise-orchestrator/src
+Environment=EOA_HOST=127.0.0.1
+Environment=EOA_PORT=8085
+Environment=EOA_STATE_DIR=/var/lib/enterprise-orchestrator
+WorkingDirectory=/opt/enterprise-orchestrator
+ExecStart=/usr/bin/python3 -m enterprise_orchestrator.app
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/enterprise-orchestrator
+
+[Install]
+WantedBy=multi-user.target

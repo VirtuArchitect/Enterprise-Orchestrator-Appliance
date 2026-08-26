@@ -1,0 +1,25 @@
+services:
+  enterprise-orchestrator:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile
+    image: enterprise-orchestrator-appliance:0.1.0
+    environment:
+      EOA_HOST: 0.0.0.0
+      EOA_PORT: 8085
+      EOA_STATE_DIR: /var/lib/enterprise-orchestrator
+      EOA_OLLAMA_MODEL: llama3:8b
+    ports:
+      - "8085:8085"
+    volumes:
+      - eoa-state:/var/lib/enterprise-orchestrator
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+volumes:
+  eoa-state:

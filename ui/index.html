@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enterprise Orchestrator Appliance</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">EAAP-aligned local appliance</p>
+        <h1>Enterprise Orchestrator</h1>
+      </div>
+      <div class="topActions">
+        <button
+          class="themeToggle"
+          id="themeToggle"
+          type="button"
+          aria-pressed="false"
+        >
+          Dark mode
+        </button>
+        <div class="status" id="runtimeStatus">Checking runtime</div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel intake">
+        <h2>Request Intake</h2>
+        <label>
+          Operator
+          <input id="operator" value="operator@example.local" />
+        </label>
+        <label>
+          Tenant
+          <input id="tenant" value="lab" />
+        </label>
+        <label>
+          Action Boundary
+          <select id="boundary">
+            <option value="T0">T0 read-only</option>
+            <option value="T1">T1 low-risk reversible</option>
+            <option value="T2">T2 disruptive</option>
+            <option value="T3">T3 destructive</option>
+          </select>
+        </label>
+        <label>
+          Infrastructure Request
+          <textarea id="task" rows="6">Troubleshoot degraded Nutanix VM performance and identify the safest next validation step.</textarea>
+        </label>
+        <button id="submitRequest">Generate governed plan</button>
+      </section>
+
+      <section class="panel evidence">
+        <h2>Evidence</h2>
+        <label>
+          Source
+          <input id="evidenceSource" value="operator-notes" />
+        </label>
+        <label>
+          Summary
+          <input id="evidenceSummary" value="VM latency observed during business hours" />
+        </label>
+        <label>
+          Content
+          <textarea id="evidenceContent" rows="5">No cluster health output collected yet.</textarea>
+        </label>
+        <button id="addEvidence">Add evidence</button>
+        <label>
+          Search Evidence
+          <input id="evidenceSearch" placeholder="storage latency dns" />
+        </label>
+        <button id="searchEvidence">Search</button>
+        <div id="evidenceList" class="list"></div>
+      </section>
+
+      <section class="panel plan">
+        <div class="sectionHead">
+          <h2>Governed Plan</h2>
+          <button id="dryRun" disabled>Dry-run gateway</button>
+        </div>
+        <div id="planSummary" class="empty">No plan generated yet.</div>
+        <pre id="planJson"></pre>
+      </section>
+
+      <section class="panel approvals">
+        <h2>Approvals</h2>
+        <div id="approvalList" class="list"></div>
+      </section>
+
+      <section class="panel ops">
+        <h2>Operations</h2>
+        <button id="modelHealth">Check model</button>
+        <button id="backupState">Create backup</button>
+        <button id="connectorPlan">Read-only diagnostic plan</button>
+        <button id="stageUpdate">Stage sample update</button>
+        <pre id="opsJson"></pre>
+      </section>
+
+      <section class="panel history">
+        <h2>History</h2>
+        <div id="historyList" class="list"></div>
+      </section>
+
+      <section class="panel audit">
+        <h2>Audit</h2>
+        <div id="auditState" class="status">No audit events loaded</div>
+        <div id="auditList" class="list"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

@@ -12,16 +12,16 @@ governed APIs that enforce evidence, risk tier, approval, rollback, and audit.
 
 ## Logical Components
 
-Component | Responsibility
+Component | Responsibility | Current state
 --- | ---
-Operator UI | Guided request intake, evidence capture, plan review, approval state, audit visibility
-Orchestrator API | Request classification, domain routing, output-contract validation, governance handoff
-LLM Adapter | Local model runtime abstraction for Ollama, llama.cpp, or future offline runtimes
-Evidence Service | Local document, log, and runbook ingestion with provenance tracking
-Approval Workflow | Human approval for actions above configured risk thresholds
-Execution Gateway | Sole interface for infrastructure-mutating connectors
-Audit Service | Immutable event trail for requests, decisions, approvals, execution, and validation
-Appliance API | Health, runtime config, backup, restore, update, and support-bundle surfaces
+Operator UI | Guided request intake, evidence capture, plan review, approval state, audit visibility | Static MVP
+Orchestrator API | Request classification, domain routing, output-contract validation, governance handoff | Stdlib HTTP MVP
+LLM Adapter | Local model runtime abstraction for Ollama, llama.cpp, or future offline runtimes | Ollama plus deterministic fallback
+Evidence Service | Local document, log, and runbook ingestion with provenance tracking | JSON local store
+Approval Workflow | Human approval for actions above configured risk thresholds | Local plan-hash-bound queue
+Execution Gateway | Sole interface for infrastructure-mutating connectors | Dry-run only
+Audit Service | Immutable event trail for requests, decisions, approvals, execution, and validation | JSONL hash chain
+Appliance API | Health, runtime config, backup, restore, update, and support-bundle surfaces | Health/status only
 
 ## Default Request Flow
 

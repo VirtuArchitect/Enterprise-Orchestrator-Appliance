@@ -21,19 +21,20 @@ security-sensitive by default.
 Current foundation-stage commands:
 
 ```text
-Install: No install step yet.
+Install: No install step required for the dependency-free local MVP.
 Lint: Not configured yet.
 Format check: Not configured yet.
 Type check: Not configured yet.
-Unit tests: Not configured yet.
+Unit tests: $env:PYTHONPATH="src"; python -m unittest discover -s tests
 Integration tests: Not configured yet.
 End-to-end tests: Not configured yet.
 Build: Not configured yet.
-Run app: Not configured yet.
-Smoke test: python scripts/validate_repository.py
+Run app: $env:PYTHONPATH="src"; python -m enterprise_orchestrator.app
+Smoke test: python scripts/validate_repository.py; $env:PYTHONPATH="src"; python scripts/smoke_app.py
 Security scan: GitHub Actions Gitleaks workflow when pushed to GitHub.
 ```
 
+On bash/Linux CI, use `PYTHONPATH=src python -m unittest discover -s tests`.
 Update this section as soon as a runtime stack is added.
 
 ## Architecture Boundaries

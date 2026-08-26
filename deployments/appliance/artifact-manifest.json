@@ -1,0 +1,481 @@
+{
+  "artifact": "enterprise-orchestrator-appliance-source",
+  "files": [
+    {
+      "bytes": 146,
+      "path": ".dockerignore",
+      "sha256": "1ca22335b65a427462dabb34afb980987d8b5f2c50aa64382b50de29f21c01e9"
+    },
+    {
+      "bytes": 213,
+      "path": ".editorconfig",
+      "sha256": "8e608db783a129601ce441d08bdde9a05dff1811f9e5c011681c9a2eef9e70a5"
+    },
+    {
+      "bytes": 263,
+      "path": ".env.example",
+      "sha256": "64226442f3bb6cac132aabb1827acbbc9acbca5afb180f198a4235faffc8d02a"
+    },
+    {
+      "bytes": 118,
+      "path": ".github/CODEOWNERS",
+      "sha256": "2620e5b95e01952ff3c9ce022432811d559cd8b1bf5a568de047bb0590d132fb"
+    },
+    {
+      "bytes": 285,
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "sha256": "b04982b324008ec8a9b4b6c282cf140ecafe5785dbdfa0a30125ae60268aa9d4"
+    },
+    {
+      "bytes": 242,
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "sha256": "07e41835f54c1f976a43660712a295c95541b477c0fe88544bb971711b944c4e"
+    },
+    {
+      "bytes": 424,
+      "path": ".github/ISSUE_TEMPLATE/security_review.md",
+      "sha256": "2e6a0500072e1c79d23194d9c52efca905afeebf725c8e56d62185c45e9b17fb"
+    },
+    {
+      "bytes": 712,
+      "path": ".github/pull_request_template.md",
+      "sha256": "cc43ab53df8d97f2d9116910b294555ca6679c32d693b1c853c83030454760ba"
+    },
+    {
+      "bytes": 1538,
+      "path": ".github/workflows/ci.yml",
+      "sha256": "2663d380b41cc25c86f50f009f3e47a2a0211e01234e4b6ca31fb69a2dad1804"
+    },
+    {
+      "bytes": 298,
+      "path": ".gitignore",
+      "sha256": "d270559e317099aee9b9879b5e13b2ab761b3e5fdea380171fec780ef646e63e"
+    },
+    {
+      "bytes": 4639,
+      "path": "AGENTS.md",
+      "sha256": "c4b92aa58dc55f9eb29d4542d4ae1ab453cba4be02809381aac15109ff47085a"
+    },
+    {
+      "bytes": 426,
+      "path": "CHANGELOG.md",
+      "sha256": "41c1417d12f9a57e1fd6e57d4ff94309a9d01973f14c759aaf0454b192970c57"
+    },
+    {
+      "bytes": 1701,
+      "path": "CODE_REVIEW.md",
+      "sha256": "1957545dd52e5f92a62ccd020c91216549cd88dc13aab289964adeeea08102dc"
+    },
+    {
+      "bytes": 897,
+      "path": "CONTRIBUTING.md",
+      "sha256": "5117788614ab20319a434d8e62b6730723e2b4a756680c12f47b7d02a39b3210"
+    },
+    {
+      "bytes": 620,
+      "path": "deployments/appliance/enterprise-orchestrator.service",
+      "sha256": "0e87720ee84b6fbba2d291e3e3a546329ecc5e48f6e71f934dc1cab61859d3a4"
+    },
+    {
+      "bytes": 449,
+      "path": "deployments/appliance/firstboot.sh",
+      "sha256": "f4e3f14c066980804eb5f157e3d9b6f60dd0a7e37c1374eaffd965c3e18b7fef"
+    },
+    {
+      "bytes": 654,
+      "path": "deployments/appliance/README.md",
+      "sha256": "4c958c98929fde38aa4d3548ad8f3ac66f2d3150121c1d0aa11295dc7d7ae649"
+    },
+    {
+      "bytes": 765,
+      "path": "deployments/appliance/sbom.json",
+      "sha256": "c55e72eafc7522c41816c4244f7a18adf7b7fd4b89998f8a703385e6a96ce852"
+    },
+    {
+      "bytes": 313,
+      "path": "deployments/docker/compose.ollama.yaml",
+      "sha256": "e34af176b54d6cd91772af184b864c94436b02835fbd87d38c75579f661d2b56"
+    },
+    {
+      "bytes": 555,
+      "path": "deployments/docker/compose.yaml",
+      "sha256": "fba40c73219128ebf02c57a85c07f20f8836d47d0abc4fa5cbef674c9b502b67"
+    },
+    {
+      "bytes": 597,
+      "path": "deployments/docker/Dockerfile",
+      "sha256": "73c50d67e67daab50771d471d8ffb80f8974b1d45719e1ff36e08b4f9ee0ce0a"
+    },
+    {
+      "bytes": 505,
+      "path": "deployments/docker/README.md",
+      "sha256": "35008602466f96fea9800eadecd3aedc23112315df9ca7a75b6997dadd8e7513"
+    },
+    {
+      "bytes": 255,
+      "path": "deployments/README.md",
+      "sha256": "4520f40ff1e10f3d8e156816c56c3c9bddb07f99b4d65ca5fe59396fe0219b2b"
+    },
+    {
+      "bytes": 1065,
+      "path": "docs/architecture/data-flow.md",
+      "sha256": "d848f94840f565a68fc240cc5e46bbb1dd1956bcf63f942e972f8577a4056c45"
+    },
+    {
+      "bytes": 1190,
+      "path": "docs/architecture/deployment.md",
+      "sha256": "b86fcfb27108d5b9112ec61625a6af7555e958751e7a81ca173ffa718d37c32c"
+    },
+    {
+      "bytes": 2246,
+      "path": "docs/architecture/overview.md",
+      "sha256": "3523219e8c959437b37bf86d6ad537e12a114b2d23a68f03b6fe80a4447f0398"
+    },
+    {
+      "bytes": 426,
+      "path": "docs/architecture/README.md",
+      "sha256": "48a7472bd10142195368053acd476f25889a9da07d5639a47c750a7c1ef643ec"
+    },
+    {
+      "bytes": 941,
+      "path": "docs/operations/ahv-rhel-appliance.md",
+      "sha256": "1916d1ef42b7eb80e6d2b64919c96c30686d6f6e6b0bcf728460d517bf860170"
+    },
+    {
+      "bytes": 619,
+      "path": "docs/operations/appliance-update-boundary.md",
+      "sha256": "bb1239fa673e3c0ad32f8dd8500a77076a3a5554f18ba3bdfb502b7e17cf8e99"
+    },
+    {
+      "bytes": 388,
+      "path": "docs/operations/local-development.md",
+      "sha256": "dbc8cad2125f492663947c6a14feded796c13903077ec613bb3aa63f53d94711"
+    },
+    {
+      "bytes": 294,
+      "path": "docs/operations/README.md",
+      "sha256": "df0066ac57cd321fee467c7a0f2f256a2b34d7d9be534046919ca5154a4a9ecb"
+    },
+    {
+      "bytes": 684,
+      "path": "docs/release/RELEASE_NOTES.md",
+      "sha256": "df60879ccdc2473acc954d77f162af084ca14229a9805d89b2b25c1e6c692757"
+    },
+    {
+      "bytes": 217,
+      "path": "docs/security/README.md",
+      "sha256": "35ce79a7ebd3336adae726d82f57d2a798bbf6939236969254e33bdf7c8834fa"
+    },
+    {
+      "bytes": 220,
+      "path": "docs/testing/README.md",
+      "sha256": "b314fb4ea9f1de1f3d58106b4a3662f69f0979e08ff0e9f9639b8c40c4ce5059"
+    },
+    {
+      "bytes": 144,
+      "path": "docs/testing/smoke-tests.md",
+      "sha256": "b9c6f87d4514370d4417f8a5fad5b16ce6d1a7578bcfcd64237bbf210fa80439"
+    },
+    {
+      "bytes": 1057,
+      "path": "LICENSE",
+      "sha256": "75054b6a08e1008c86b6045ab99add2c8fa571987880951a9929f11ee56a7d64"
+    },
+    {
+      "bytes": 1368,
+      "path": "PENTEST_SCOPE_TEMPLATE.md",
+      "sha256": "391425f369061eafc3c54d2d050be5d4c4765784beb43186e80964e413a9218c"
+    },
+    {
+      "bytes": 811,
+      "path": "prompts/enterprise-orchestrator-v5.6.md",
+      "sha256": "af5442052214776321dab96ec6f9396383fa0c212754ae1f9d3b3ad92a0f4329"
+    },
+    {
+      "bytes": 2207,
+      "path": "prompts/output-contract.schema.json",
+      "sha256": "517071601cb1639103bed6b910021ea253f152fa4712ee821f88caae6979dd5f"
+    },
+    {
+      "bytes": 268,
+      "path": "pyproject.toml",
+      "sha256": "e440497a452a21c76d6b7ac134f88cd62bf94402f785326d38a0c17546fb1578"
+    },
+    {
+      "bytes": 3375,
+      "path": "README.md",
+      "sha256": "de1dad693ddb397b0a4f93f216e255af1f5117ddbae97c01b852d027e6793dd0"
+    },
+    {
+      "bytes": 1021,
+      "path": "scripts/create_support_bundle.py",
+      "sha256": "e514fe4a18bb7d64b86d1965e81ef6452f017607ffe186cd99fece035541390e"
+    },
+    {
+      "bytes": 1565,
+      "path": "scripts/generate_artifact_manifest.py",
+      "sha256": "e0881289b1e3423b2ccd433c3c8df29f65bcb26e468bfc6f37fe206d0a597732"
+    },
+    {
+      "bytes": 1498,
+      "path": "scripts/generate_sbom.py",
+      "sha256": "3a5c3882d816397893fa677de2f34074fb8638efa9b97a50bbbab9fad39d1546"
+    },
+    {
+      "bytes": 227,
+      "path": "scripts/README.md",
+      "sha256": "7a52358b4af858fb87aebe5fc83d177fa8e5a38fd9495ff914dd1f45e10683d1"
+    },
+    {
+      "bytes": 3967,
+      "path": "scripts/smoke_app.py",
+      "sha256": "8247836ba5a8368ea1c56155605ca65ff51cfc2d0d8d58c511194a3a64e86976"
+    },
+    {
+      "bytes": 4165,
+      "path": "scripts/validate_repository.py",
+      "sha256": "12f9d5ccbb00edfb33f15c7ab29540fab15c7c70870b71a16a26eb9ea267a343"
+    },
+    {
+      "bytes": 687,
+      "path": "SECURITY.md",
+      "sha256": "3faa762b67b6951f2bb6bb8f5d861655647c0011496ce105635789574c24159a"
+    },
+    {
+      "bytes": 3536,
+      "path": "SECURITY_REVIEW.md",
+      "sha256": "78d73c2f9260da8c3479a46de177f304e5ef4471ef9c488536959230829bf33c"
+    },
+    {
+      "bytes": 350,
+      "path": "services/appliance-api/README.md",
+      "sha256": "45867d99c41e36bfb54415dd0febe23a08e3321e895613f7b2e551b98b0a61cf"
+    },
+    {
+      "bytes": 351,
+      "path": "services/audit-service/README.md",
+      "sha256": "3777dca421197e7c52828c8136cb86cdbb60ed619c79676edd811320f5ed5174"
+    },
+    {
+      "bytes": 364,
+      "path": "services/evidence-service/README.md",
+      "sha256": "08895ea08e9d87495c31c55d30c628157306f2dfa1134478b37ebe70dca58a86"
+    },
+    {
+      "bytes": 321,
+      "path": "services/llm-adapter/README.md",
+      "sha256": "5fecbbce0a4caeb9f964800f304a9a091e958997009059696ee8261bbb312d89"
+    },
+    {
+      "bytes": 513,
+      "path": "services/orchestrator-api/README.md",
+      "sha256": "13897d7d4b10591d3208e9674efa7e7993202e201cdf46ea0a358c5b87bb48d1"
+    },
+    {
+      "bytes": 684,
+      "path": "services/README.md",
+      "sha256": "8e8bcd9afb4c3448565ee3663922e0d6c8ed4b0dcc92c261c6e96e0456c519cd"
+    },
+    {
+      "bytes": 1,
+      "path": "src/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "bytes": 77,
+      "path": "src/enterprise_orchestrator/__init__.py",
+      "sha256": "88398a3cb99a3830383d9f658127aa369c7ccb0d49cfd2c0e521cb116b43d6ca"
+    },
+    {
+      "bytes": 11090,
+      "path": "src/enterprise_orchestrator/app.py",
+      "sha256": "096afb72579c184d17184ea3b0889e7411d9782984470337aa27ef36ed5a29bd"
+    },
+    {
+      "bytes": 113,
+      "path": "src/enterprise_orchestrator/appliance_api/__init__.py",
+      "sha256": "11a3fc34c09e18ef7d0baa71a3c54d43ef17796c0323212b05e2dd89f0027a11"
+    },
+    {
+      "bytes": 1909,
+      "path": "src/enterprise_orchestrator/appliance_api/operations.py",
+      "sha256": "bc09b7f218de6c10d1bd8deb1200f22e283024abfaf837906ad1681fa1edbbaa"
+    },
+    {
+      "bytes": 1257,
+      "path": "src/enterprise_orchestrator/appliance_api/status.py",
+      "sha256": "f25be031790ab47af115729d64924057fd6c388b7a9bcf72d5992961d950c2a3"
+    },
+    {
+      "bytes": 94,
+      "path": "src/enterprise_orchestrator/approval_workflow/__init__.py",
+      "sha256": "4eb55052f0cb9da497d579dad75f0bb8362c9114dfc186e5b89810ccae179cbe"
+    },
+    {
+      "bytes": 2839,
+      "path": "src/enterprise_orchestrator/approval_workflow/queue.py",
+      "sha256": "78ff178ea97196e02edd9a87c8b3872751636455afe594f57bf7bd0703510a6a"
+    },
+    {
+      "bytes": 99,
+      "path": "src/enterprise_orchestrator/audit_service/__init__.py",
+      "sha256": "70f16df6f89218f4505fc1c74439eca27bfd7af5b6f23ae8d2626f532f79a17b"
+    },
+    {
+      "bytes": 2031,
+      "path": "src/enterprise_orchestrator/audit_service/store.py",
+      "sha256": "989cb5f97d4d263ce0ee50075c066ef86b957e35661c4429f222cd72cb96de57"
+    },
+    {
+      "bytes": 93,
+      "path": "src/enterprise_orchestrator/evidence_service/__init__.py",
+      "sha256": "b94bef9aa4c147c6713c92c03395e9bb230d4a8baede03563fc1052935414865"
+    },
+    {
+      "bytes": 2434,
+      "path": "src/enterprise_orchestrator/evidence_service/store.py",
+      "sha256": "63828045f024d4b5afd12260500eea20d56abb0e5eded1161881f198e0fc75fb"
+    },
+    {
+      "bytes": 125,
+      "path": "src/enterprise_orchestrator/execution_gateway/__init__.py",
+      "sha256": "2926be55de92ae1dbf879ff8ed6bdea322b547fc10818e8612857499dc232aa0"
+    },
+    {
+      "bytes": 2480,
+      "path": "src/enterprise_orchestrator/execution_gateway/connectors.py",
+      "sha256": "eee509545bc5ec16560ab0aba653248ffdb0627194820932929f8819045c4a95"
+    },
+    {
+      "bytes": 1756,
+      "path": "src/enterprise_orchestrator/execution_gateway/dry_run.py",
+      "sha256": "06c18f434c3bb765e3ccaaab5bb15c92bdc3bb1fe8389e7e6efcea366b1a2544"
+    },
+    {
+      "bytes": 170,
+      "path": "src/enterprise_orchestrator/governance_engine/__init__.py",
+      "sha256": "7903d1a3eda2211acf73d4c6225f94a4ea3b18bfaffb91653cff47ab64bc03b7"
+    },
+    {
+      "bytes": 2055,
+      "path": "src/enterprise_orchestrator/governance_engine/rules.py",
+      "sha256": "c5dd2cac0fda0623895ec14708b4f9946cbf248506a12ac0bae7d729ea6477fb"
+    },
+    {
+      "bytes": 129,
+      "path": "src/enterprise_orchestrator/ids.py",
+      "sha256": "1b37c085fce26b3e4f2358444b188fb7f700ba5b2df717647caa2427872129fc"
+    },
+    {
+      "bytes": 1224,
+      "path": "src/enterprise_orchestrator/json_store.py",
+      "sha256": "3627b4a32a8393323b4adfe30f9e665f2ce37eaa62773df49db3a32413b5cfa3"
+    },
+    {
+      "bytes": 176,
+      "path": "src/enterprise_orchestrator/llm_adapter/__init__.py",
+      "sha256": "94d53dd3a1f99a4742ee5681af9e48167ebd77e50fc3e9a6ed5ee08bee85cdb5"
+    },
+    {
+      "bytes": 7222,
+      "path": "src/enterprise_orchestrator/llm_adapter/client.py",
+      "sha256": "b689f4624f8f6e400514eaf408556e15eb9c4703879793c6828821f72be4ca35"
+    },
+    {
+      "bytes": 355,
+      "path": "src/enterprise_orchestrator/orchestrator_api/__init__.py",
+      "sha256": "51e811f25a88ec943e03e87cefa202ad05dcec6128450962466ffbeb66a923c3"
+    },
+    {
+      "bytes": 2974,
+      "path": "src/enterprise_orchestrator/orchestrator_api/contract.py",
+      "sha256": "6c77e5b2abb7e4b36008b8d5bafd67b8edd7f3c7ae7daab79fffc2f9bb9e9f70"
+    },
+    {
+      "bytes": 436,
+      "path": "src/enterprise_orchestrator/orchestrator_api/history.py",
+      "sha256": "6ea00ad5f396d199da2535251f27f0e0a59b24204b68fcb67b0748499568debc"
+    },
+    {
+      "bytes": 1591,
+      "path": "src/enterprise_orchestrator/orchestrator_api/models.py",
+      "sha256": "012debaf042e6d2dbb17d9e13e3794bc7e818115f910dc24a5b65af9d057f30b"
+    },
+    {
+      "bytes": 7715,
+      "path": "src/enterprise_orchestrator/orchestrator_api/service.py",
+      "sha256": "743e139b15cc492fa56b308bb4b93ac41118141cb998c944553d640ce752b822"
+    },
+    {
+      "bytes": 439,
+      "path": "src/enterprise_orchestrator/paths.py",
+      "sha256": "37242b3d556f1dcc7b3d716ef1539862846228b796c7b2b83f1605207e55c577"
+    },
+    {
+      "bytes": 4264,
+      "path": "STATUS.md",
+      "sha256": "657702790d3df17ca354895e1ef38d6cb0fbbd84d6625c1cdc96fe2ff212c050"
+    },
+    {
+      "bytes": 2000,
+      "path": "TESTING_GUIDE.md",
+      "sha256": "57e3e3bfb81cc80e886d864e22344b4b53932d3f397c830e183d9d06918910dc"
+    },
+    {
+      "bytes": 1,
+      "path": "tests/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "bytes": 792,
+      "path": "tests/test_llm_adapter.py",
+      "sha256": "01498a20fec5655ad0b0dce501ac591f4baa3e2a28daf3385bb9a2535134592f"
+    },
+    {
+      "bytes": 3156,
+      "path": "tests/test_maturity_services.py",
+      "sha256": "a2155aa12950faa3ebf09dfddf8aaff3e523d6c1b8b32a3f67367a7667b03199"
+    },
+    {
+      "bytes": 5301,
+      "path": "tests/test_orchestrator_api.py",
+      "sha256": "9d9980d4597190af23fd5f64c3c68466ec0a54e15b34b1d99d15f9d5c105e5e3"
+    },
+    {
+      "bytes": 3381,
+      "path": "tests/test_services.py",
+      "sha256": "ed07329f86e7e1f1980692b084dc8e1536592dab77187b48af746745ea14aa5f"
+    },
+    {
+      "bytes": 801,
+      "path": "tests/test_ui_static.py",
+      "sha256": "90381679f5bba44f0a029111a0b98e2c327cb5b775e61f11165c7150655b0f3d"
+    },
+    {
+      "bytes": 8733,
+      "path": "ui/app.js",
+      "sha256": "a4f49ac650d72cfdb7488bb448bb7742444f4f42d53bf94d8af63f1492e380dd"
+    },
+    {
+      "bytes": 3634,
+      "path": "ui/index.html",
+      "sha256": "6cb48c2980176099905cb30ef6cfed76b101c11b820e95859e88ae99dd82a119"
+    },
+    {
+      "bytes": 615,
+      "path": "ui/README.md",
+      "sha256": "6699980688ac06bc00ee9feb898e002547303a81c22a2ed727c569e3a1beda5b"
+    },
+    {
+      "bytes": 4738,
+      "path": "ui/styles.css",
+      "sha256": "31b77030765af9896a7dfe0cd7fa0fd2d84a0ccd1e2beb814e2e588c7666d5cd"
+    },
+    {
+      "bytes": 6,
+      "path": "VERSION",
+      "sha256": "e9dd8507f4bf0c6f42458e41aea833ad0bd3f6127272335eee9bf4d58541ed67"
+    }
+  ],
+  "generated_at": "2026-08-26T14:30:50.053668+00:00"
+}

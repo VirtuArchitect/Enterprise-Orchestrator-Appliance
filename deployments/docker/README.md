@@ -1,13 +1,21 @@
 # Docker Deployment
 
-Planned Docker Compose profile for local validation.
+This folder contains the first local appliance Docker profile.
 
-The first runnable stack should include:
+Run the dependency-free profile:
 
-- operator UI
-- orchestrator API
-- LLM adapter
-- selected local model runtime
-- evidence service
-- audit service
-- appliance API
+```bash
+docker compose -f deployments/docker/compose.yaml up --build
+```
+
+Run with an Ollama sidecar:
+
+```bash
+docker compose \
+  -f deployments/docker/compose.yaml \
+  -f deployments/docker/compose.ollama.yaml \
+  up --build
+```
+
+Boundary: this is a local validation profile. Before release packaging, base
+image digests and transferred artifacts must be pinned and checksum-verified.
