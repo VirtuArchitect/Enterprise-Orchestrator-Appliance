@@ -3,7 +3,7 @@ services:
     build:
       context: ../..
       dockerfile: deployments/docker/Dockerfile
-    image: enterprise-orchestrator-appliance:0.1.0
+    image: enterprise-orchestrator-appliance:0.2.0
     environment:
       EOA_HOST: 0.0.0.0
       EOA_PORT: 8085

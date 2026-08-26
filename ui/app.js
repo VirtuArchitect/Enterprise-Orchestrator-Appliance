@@ -257,7 +257,7 @@ $("stageUpdate").addEventListener("click", async () => {
       body: JSON.stringify({
         tenant: $("tenant").value,
         requested_by: $("operator").value,
-        version: "0.1.0-local",
+        version: "0.2.0-local",
         artifact_path: "internal-artifact-repository/enterprise-orchestrator.tar.gz",
         sha256: "replace-with-verified-sha256-before-transfer",
         notes: "Sample staged request; apply is disabled.",

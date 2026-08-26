@@ -1,5 +1,35 @@
 # Release Notes
 
+## 0.2.0 Phase 10-15 Maturity Increment
+
+This release candidate increment advances the appliance baseline with optional
+API runtime, local authorization, stronger evidence handling, integration
+handoff scaffolding, image-build planning, and release-gate automation.
+
+Demo:
+
+- https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+
+Validated:
+
+- optional FastAPI entrypoint source contract
+- local RBAC role and tenant checks
+- signed evidence and tamper detection
+- semantic evidence search
+- fail-closed EAAP control-plane status and handoff boundary
+- AHV/RHEL image-build plan generation
+- Phase 15 release gates
+- demo link validation
+- Docker Compose base and Ollama overlay configuration
+
+Boundaries:
+
+- FastAPI dependencies are optional and not installed by default.
+- EAAP integration is disabled unless explicitly configured.
+- EAAP handoff remains plan-only and does not execute infrastructure changes.
+- No QCOW2, installer, or air-gapped appliance image has been produced.
+- Release gates are project controls, not a security certification.
+
 ## 0.1.0 Local MVP
 
 This release candidate establishes the first Enterprise Orchestrator Appliance

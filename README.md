@@ -27,7 +27,7 @@ It is not:
 
 ```text
 Operator
-  -> React operator UI
+  -> Static or optional FastAPI-hosted operator UI/API
   -> EAAP orchestrator API
   -> LLM adapter
   -> Local model runtime
@@ -36,6 +36,15 @@ Operator
 
 The LLM produces plans and recommendations. Deterministic services enforce
 governance, approval, execution boundaries, rollback requirements, and audit.
+
+## Demo
+
+Static demo: https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+
+The demo is a hosted, static snapshot of the operator console. It demonstrates
+the governed workflow and maturity boundary without connecting to live services
+or infrastructure. The demo URL is stored in `DEMO_URL` and is validated by the
+release gates so future updates keep this link current.
 
 ## Repository Layout
 
@@ -62,12 +71,13 @@ Python plus a static operator UI.
 
 ## First Milestones
 
-1. Promote the stdlib API facade to FastAPI or equivalent when dependencies are
-   explicitly approved.
-2. Add signed evidence policy and vector retrieval.
-3. Add live EAAP control-plane service integration.
-4. Build and validate an actual AHV/RHEL appliance image.
-5. Replace local-only identity placeholders with an enterprise identity model.
+1. Install and validate the optional FastAPI runtime profile.
+2. Connect the fail-closed EAAP handoff client to a real control-plane
+   environment.
+3. Build and validate an actual AHV/RHEL appliance image.
+4. Replace local bootstrap RBAC with an enterprise identity provider.
+5. Add external vector/RAG infrastructure once a storage and security model is
+   approved.
 
 ## Verification
 
@@ -92,6 +102,13 @@ Run the local MVP smoke test with:
 ```powershell
 $env:PYTHONPATH = "src"
 python scripts/smoke_app.py
+```
+
+Run the Phase 15 release gates with:
+
+```powershell
+$env:PYTHONPATH = "src"
+python scripts/run_release_gates.py
 ```
 
 Start the local operator console with:

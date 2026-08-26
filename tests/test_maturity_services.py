@@ -9,9 +9,11 @@ from enterprise_orchestrator.appliance_api.operations import (
     list_updates,
     stage_update,
 )
+from enterprise_orchestrator.eaap_integration import ControlPlaneClient
 from enterprise_orchestrator.evidence_service import EvidenceStore
 from enterprise_orchestrator.execution_gateway.connectors import ReadOnlyDiagnosticConnector
 from enterprise_orchestrator.governance_engine import GovernanceEvaluator
+from enterprise_orchestrator.identity_service import IdentityService
 from enterprise_orchestrator.llm_adapter.client import _load_json_response
 
 
@@ -54,6 +56,45 @@ class MaturityServiceTests(unittest.TestCase):
         results = store.search("lab", "storage latency")
 
         self.assertEqual(results[0]["evidence_id"], match["evidence_id"])
+        self.assertTrue(store.verify(match))
+        self.assertTrue(store.verify_all("lab")["valid"])
+
+    def test_semantic_evidence_search_scores_related_records(self) -> None:
+        store = EvidenceStore()
+        match = store.add("lab", "ncc", "Storage latency", "disk latency and iops")
+        store.add("lab", "auth", "Kerberos notes", "time drift")
+
+        results = store.semantic_search("lab", "storage iops latency")
+
+        self.assertEqual(results[0]["evidence_id"], match["evidence_id"])
+        self.assertGreater(results[0]["similarity"], 0)
+
+    def test_evidence_signature_detects_content_tampering(self) -> None:
+        store = EvidenceStore()
+        record = store.add("lab", "source", "summary", "original")
+        record["content"] = "changed"
+
+        self.assertFalse(store.verify(record))
+
+    def test_identity_rbac_defaults_to_fail_closed_for_unknown_actor(self) -> None:
+        identity = IdentityService()
+
+        self.assertTrue(identity.can("operator@example.local", "update:stage", "lab"))
+        self.assertFalse(identity.can("anonymous@example.local", "request:create", "lab"))
+
+    def test_identity_rbac_respects_tenant_scope(self) -> None:
+        identity = IdentityService()
+        identity.upsert_user("approver@example.local", "approver", tenants=["lab"])
+
+        self.assertTrue(identity.can("approver@example.local", "approval:decide", "lab"))
+        self.assertFalse(identity.can("approver@example.local", "approval:decide", "prod"))
+
+    def test_eaap_client_is_disabled_until_configured(self) -> None:
+        client = ControlPlaneClient(base_url="")
+
+        self.assertFalse(client.status()["configured"])
+        with self.assertRaises(RuntimeError):
+            client.handoff_plan({"request_id": "req-test"})
 
     def test_connector_catalogue_only_plans_commands(self) -> None:
         connector = ReadOnlyDiagnosticConnector()
@@ -68,7 +109,7 @@ class MaturityServiceTests(unittest.TestCase):
             artifact_path="internal/release.tar.gz",
             sha256="abc123",
             requested_by="operator",
-            version="0.1.0",
+            version="0.2.0",
         )
 
         self.assertFalse(update["apply_enabled"])

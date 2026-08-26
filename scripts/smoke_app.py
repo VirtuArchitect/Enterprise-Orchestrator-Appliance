@@ -33,6 +33,11 @@ def main() -> None:
                     "content": "No live infrastructure touched.",
                 },
             )["evidence"]
+            assert evidence["content_sha256"], evidence
+            assert evidence["signature"], evidence
+
+            evidence_verification = get(port, "/api/evidence/verify?tenant=smoke")
+            assert evidence_verification["valid"] is True, evidence_verification
 
             request = post(
                 port,
@@ -64,9 +69,22 @@ def main() -> None:
             connector_plan = post(
                 port,
                 "/api/connectors/read-only-plan",
-                {"domains": ["nutanix", "storage"]},
+                {
+                    "tenant": "smoke",
+                    "requested_by": "operator@example.local",
+                    "domains": ["nutanix", "storage"],
+                },
             )
             assert connector_plan["commands"], connector_plan
+
+            semantic_search = get(
+                port,
+                "/api/evidence/semantic-search?tenant=smoke&q=live%20infrastructure",
+            )
+            assert semantic_search["evidence"], semantic_search
+
+            eaap_status = get(port, "/api/integrations/eaap")
+            assert eaap_status["configured"] is False, eaap_status
 
             backup = post(
                 port,
@@ -83,7 +101,7 @@ def main() -> None:
                     "requested_by": "operator@example.local",
                     "artifact_path": "internal/release.tar.gz",
                     "sha256": "abc123",
-                    "version": "0.1.0",
+                    "version": "0.2.0",
                 },
             )
             assert update["update"]["apply_enabled"] is False, update

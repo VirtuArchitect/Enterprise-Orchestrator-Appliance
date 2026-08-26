@@ -13,10 +13,12 @@ from enterprise_orchestrator.appliance_api import appliance_status
 from enterprise_orchestrator.appliance_api.operations import create_backup, list_updates, stage_update
 from enterprise_orchestrator.approval_workflow import ApprovalQueue
 from enterprise_orchestrator.audit_service import AuditStore
+from enterprise_orchestrator.eaap_integration import ControlPlaneClient
 from enterprise_orchestrator.evidence_service import EvidenceStore
 from enterprise_orchestrator.execution_gateway.connectors import ReadOnlyDiagnosticConnector
 from enterprise_orchestrator.execution_gateway import DryRunExecutionGateway
 from enterprise_orchestrator.ids import new_id
+from enterprise_orchestrator.identity_service import IdentityService
 from enterprise_orchestrator.llm_adapter import OllamaClient
 from enterprise_orchestrator.orchestrator_api.history import list_requests
 from enterprise_orchestrator.orchestrator_api.models import OrchestrationRequest, RiskTier
@@ -28,7 +30,7 @@ UI_DIR = ROOT / "ui"
 
 
 class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
-    server_version = "EnterpriseOrchestrator/0.1"
+    server_version = "EnterpriseOrchestrator/0.2"
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
@@ -44,6 +46,15 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             tenant = parse_qs(parsed.query).get("tenant", ["default"])[0]
             self._json({"evidence": EvidenceStore().search(tenant=tenant, query=query)})
             return
+        if parsed.path == "/api/evidence/semantic-search":
+            query = parse_qs(parsed.query).get("q", [""])[0]
+            tenant = parse_qs(parsed.query).get("tenant", ["default"])[0]
+            self._json({"evidence": EvidenceStore().semantic_search(tenant=tenant, query=query)})
+            return
+        if parsed.path == "/api/evidence/verify":
+            tenant = parse_qs(parsed.query).get("tenant", [None])[0]
+            self._json(EvidenceStore().verify_all(tenant=tenant))
+            return
         if parsed.path == "/api/requests":
             tenant = parse_qs(parsed.query).get("tenant", [None])[0]
             self._json({"requests": list_requests(tenant=tenant)})
@@ -57,6 +68,9 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/connectors":
             self._json(ReadOnlyDiagnosticConnector().capabilities())
+            return
+        if parsed.path == "/api/integrations/eaap":
+            self._json(ControlPlaneClient().status())
             return
         if parsed.path == "/api/updates":
             self._json({"updates": list_updates()})
@@ -102,8 +116,10 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
 
     def _create_evidence(self, payload: dict[str, Any]) -> None:
         actor = payload.get("submitted_by", "operator")
+        tenant = payload.get("tenant", "default")
+        IdentityService().require(actor, "evidence:create", tenant)
         record = EvidenceStore().add(
-            tenant=payload.get("tenant", "default"),
+            tenant=tenant,
             source=payload["source"],
             summary=payload.get("summary", payload["source"]),
             content=payload.get("content", ""),
@@ -118,6 +134,11 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
         self._json({"evidence": record}, HTTPStatus.CREATED)
 
     def _create_request(self, payload: dict[str, Any]) -> None:
+        IdentityService().require(
+            payload.get("submitted_by", "operator"),
+            "request:create",
+            payload.get("tenant", "default"),
+        )
         request = OrchestrationRequest(
             request_id=payload.get("request_id") or new_id("req"),
             submitted_by=payload.get("submitted_by", "operator"),
@@ -153,6 +174,11 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
         self._json({"request": envelope, "approval": approval}, HTTPStatus.CREATED)
 
     def _decide_approval(self, payload: dict[str, Any]) -> None:
+        IdentityService().require(
+            payload.get("decided_by", "operator"),
+            "approval:decide",
+            payload.get("tenant", "default"),
+        )
         record = ApprovalQueue().decide(
             approval_id=payload["approval_id"],
             status=payload["status"],
@@ -169,6 +195,11 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
 
     def _execute_dry_run(self, payload: dict[str, Any]) -> None:
         request = payload["request"]
+        IdentityService().require(
+            payload.get("actor", "operator"),
+            "execution:dry_run",
+            request.get("tenant", "default"),
+        )
         plan = request["plan"]
         approved = ApprovalQueue().approved_for(
             request_id=request["request_id"],
@@ -194,11 +225,17 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
         self._json({"execution": result})
 
     def _connector_plan(self, payload: dict[str, Any]) -> None:
+        IdentityService().require(
+            payload.get("requested_by", "operator"),
+            "connector:plan",
+            payload.get("tenant", "default"),
+        )
         domains = payload.get("domains", [])
         self._json({"commands": ReadOnlyDiagnosticConnector().plan(domains)})
 
     def _create_backup(self, payload: dict[str, Any]) -> None:
         actor = payload.get("requested_by", "operator")
+        IdentityService().require(actor, "backup:create", payload.get("tenant", "default"))
         backup = create_backup()
         AuditStore().append(
             "appliance.backup.created",
@@ -210,6 +247,7 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
 
     def _stage_update(self, payload: dict[str, Any]) -> None:
         actor = payload.get("requested_by", "operator")
+        IdentityService().require(actor, "update:stage", payload.get("tenant", "default"))
         update = stage_update(
             artifact_path=payload["artifact_path"],
             sha256=payload["sha256"],

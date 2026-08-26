@@ -13,7 +13,7 @@ def appliance_status(root: Path | None = None) -> dict[str, Any]:
     ollama_url = os.environ.get("EOA_OLLAMA_URL", "")
     return {
         "status": "healthy",
-        "version": "0.1.0",
+        "version": (root / "VERSION").read_text(encoding="utf-8").strip(),
         "runtime": {
             "llm_provider": "ollama" if ollama_url else "deterministic",
             "ollama_configured": bool(ollama_url),
@@ -27,12 +27,19 @@ def appliance_status(root: Path | None = None) -> dict[str, Any]:
             "contract_validation": True,
             "operator_ui": True,
             "evidence_store": True,
+            "evidence_signing": True,
+            "semantic_evidence_search": True,
             "approval_queue": True,
+            "local_rbac": True,
+            "fastapi_runtime_optional": True,
+            "eaap_control_plane_handoff": bool(os.environ.get("EOA_EAAP_CONTROL_PLANE_URL", "")),
             "audit_chain": True,
             "dry_run_execution": True,
             "read_only_connector_plan": True,
             "backup_create": True,
             "support_bundle_export": True,
+            "release_gate_script": True,
+            "appliance_image_plan": True,
             "update_stage": True,
             "live_execution": False,
             "appliance_update_apply": False,

@@ -43,15 +43,7 @@ jobs:
 
       - name: Validate repository scaffold
         shell: bash
-        run: python scripts/validate_repository.py
-
-      - name: Run unit tests
-        shell: bash
-        run: PYTHONPATH=src python -m unittest discover -s tests
-
-      - name: Run application smoke test
-        shell: bash
-        run: PYTHONPATH=src python scripts/smoke_app.py
+        run: PYTHONPATH=src python scripts/run_release_gates.py
 
   secret-scan:
     name: Secret scan

@@ -1,0 +1,23 @@
+{
+  "artifact": "enterprise-orchestrator-appliance-image-plan",
+  "generated_at": "2026-08-26T15:22:48.657767+00:00",
+  "non_claim": "This plan does not produce or validate a QCOW2 image.",
+  "phases": [
+    "install base OS",
+    "create enterprise-orchestrator service account",
+    "install source under /opt/enterprise-orchestrator",
+    "seed /var/lib/enterprise-orchestrator with empty state",
+    "install and enable enterprise-orchestrator.service",
+    "run firstboot.sh",
+    "capture image",
+    "boot cloned image and run smoke_app.py"
+  ],
+  "required_inputs": [
+    "RHEL installation media or approved golden image",
+    "offline Python runtime and optional FastAPI wheelhouse",
+    "local model runtime bundle or approved Ollama model cache",
+    "signed source release artifact and artifact-manifest.json"
+  ],
+  "status": "plan_only",
+  "target": "Nutanix AHV / RHEL compatible VM image"
+}
