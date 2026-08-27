@@ -219,6 +219,22 @@ $("searchEvidence").addEventListener("click", async () => {
   renderEvidence();
 });
 
+$("semanticSearch").addEventListener("click", async () => {
+  const payload = await api(
+    `/api/evidence/semantic-search?tenant=${encodeURIComponent($("tenant").value)}&q=${encodeURIComponent($("evidenceSearch").value)}`,
+  );
+  state.evidence = payload.evidence;
+  renderEvidence();
+});
+
+$("verifyEvidence").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(
+    await api(`/api/evidence/verify?tenant=${encodeURIComponent($("tenant").value)}`),
+    null,
+    2,
+  );
+});
+
 $("modelHealth").addEventListener("click", async () => {
   $("opsJson").textContent = JSON.stringify(await api("/api/model/health"), null, 2);
 });
@@ -257,7 +273,7 @@ $("stageUpdate").addEventListener("click", async () => {
       body: JSON.stringify({
         tenant: $("tenant").value,
         requested_by: $("operator").value,
-        version: "0.2.0-local",
+        version: "0.3.0-local",
         artifact_path: "internal-artifact-repository/enterprise-orchestrator.tar.gz",
         sha256: "replace-with-verified-sha256-before-transfer",
         notes: "Sample staged request; apply is disabled.",
@@ -267,6 +283,18 @@ $("stageUpdate").addEventListener("click", async () => {
     2,
   );
   await refreshAudit();
+});
+
+$("promptPolicy").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(await api("/api/prompt-policy"), null, 2);
+});
+
+$("releaseStatus").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(await api("/api/release/status"), null, 2);
+});
+
+$("eaapStatus").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(await api("/api/integrations/eaap"), null, 2);
 });
 
 $("themeToggle").addEventListener("click", () => {

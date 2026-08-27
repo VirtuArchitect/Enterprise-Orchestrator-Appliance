@@ -1,5 +1,36 @@
 # Release Notes
 
+## 0.3.0 Phase 16-21 Maturity Increment
+
+This release candidate increment replaces the prompt scaffold, expands the
+operator console surface, documents the OpenWebUI-compatible roadmap, validates
+optional runtime/integration paths, and defines the image-build evidence path.
+
+Demo:
+
+- https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+- Status: `live`
+- Static artifact: `docs/demo/index.html`
+
+Validated:
+
+- governed v5.6 prompt policy clauses
+- semantic evidence search and evidence verification console controls
+- sidebar navigation for console, evidence, approvals, operations, history,
+  audit, settings, and about sections
+- prompt policy, release status, and EAAP handoff status endpoints
+- optional FastAPI runtime validation harness
+- mock EAAP plan-only handoff validation
+- AHV/RHEL image-build checklist presence
+- Phase 15 release gates
+
+Boundaries:
+
+- FastAPI dependencies are optional and are not installed by default.
+- EAAP integration remains plan-only unless configured.
+- The hosted demo is static only and does not connect to live infrastructure.
+- No QCOW2, installer, or air-gapped appliance image has been produced.
+
 ## 0.2.0 Phase 10-15 Maturity Increment
 
 This release candidate increment advances the appliance baseline with optional

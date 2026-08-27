@@ -7,26 +7,45 @@
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">EAAP-aligned local appliance</p>
-        <h1>Enterprise Orchestrator</h1>
-      </div>
-      <div class="topActions">
-        <button
-          class="themeToggle"
-          id="themeToggle"
-          type="button"
-          aria-pressed="false"
-        >
-          Dark mode
-        </button>
-        <div class="status" id="runtimeStatus">Checking runtime</div>
-      </div>
-    </header>
+    <div class="appShell">
+      <aside class="sidebar" aria-label="Console navigation">
+        <div class="brandBlock">
+          <p class="eyebrow">EAAP-aligned local appliance</p>
+          <h1>Enterprise Orchestrator</h1>
+        </div>
+        <nav class="sideNav">
+          <a href="#console">Console</a>
+          <a href="#evidence">Evidence</a>
+          <a href="#approvals">Approvals</a>
+          <a href="#operations">Operations</a>
+          <a href="#history">History</a>
+          <a href="#audit">Audit</a>
+          <a href="#settings">Settings</a>
+          <a href="#about">About</a>
+        </nav>
+        <div class="sideFooter">
+          <button
+            class="themeToggle"
+            id="themeToggle"
+            type="button"
+            aria-pressed="false"
+          >
+            Dark mode
+          </button>
+          <div class="status" id="runtimeStatus">Checking runtime</div>
+        </div>
+      </aside>
 
-    <main class="layout">
-      <section class="panel intake">
+      <div class="contentShell">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Governed operator console</p>
+            <h2>Plan, approve, dry-run, and audit infrastructure work</h2>
+          </div>
+        </header>
+
+        <main class="layout">
+      <section class="panel intake" id="console">
         <h2>Request Intake</h2>
         <label>
           Operator
@@ -52,7 +71,7 @@
         <button id="submitRequest">Generate governed plan</button>
       </section>
 
-      <section class="panel evidence">
+      <section class="panel evidence" id="evidence">
         <h2>Evidence</h2>
         <label>
           Source
@@ -72,6 +91,8 @@
           <input id="evidenceSearch" placeholder="storage latency dns" />
         </label>
         <button id="searchEvidence">Search</button>
+        <button id="semanticSearch">Semantic search</button>
+        <button id="verifyEvidence">Verify evidence signatures</button>
         <div id="evidenceList" class="list"></div>
       </section>
 
@@ -84,31 +105,63 @@
         <pre id="planJson"></pre>
       </section>
 
-      <section class="panel approvals">
+      <section class="panel approvals" id="approvals">
         <h2>Approvals</h2>
         <div id="approvalList" class="list"></div>
       </section>
 
-      <section class="panel ops">
+      <section class="panel ops" id="operations">
         <h2>Operations</h2>
         <button id="modelHealth">Check model</button>
         <button id="backupState">Create backup</button>
         <button id="connectorPlan">Read-only diagnostic plan</button>
         <button id="stageUpdate">Stage sample update</button>
+        <button id="promptPolicy">Prompt policy</button>
+        <button id="releaseStatus">Release status</button>
+        <button id="eaapStatus">EAAP handoff status</button>
         <pre id="opsJson"></pre>
       </section>
 
-      <section class="panel history">
+      <section class="panel history" id="history">
         <h2>History</h2>
         <div id="historyList" class="list"></div>
       </section>
 
-      <section class="panel audit">
+      <section class="panel audit" id="audit">
         <h2>Audit</h2>
         <div id="auditState" class="status">No audit events loaded</div>
         <div id="auditList" class="list"></div>
       </section>
-    </main>
+          <section class="panel settings" id="settings">
+            <h2>Settings</h2>
+            <div class="item">
+              <strong>Model runtime</strong>
+              <small>Ollama-compatible local runtime with deterministic fallback.</small>
+            </div>
+            <div class="item">
+              <strong>Prompt policy</strong>
+              <small>Enterprise Multi-Agent Orchestrator v5.6, contract validated.</small>
+            </div>
+            <div class="item">
+              <strong>Execution boundary</strong>
+              <small>Dry-run only; live mutation remains disabled.</small>
+            </div>
+          </section>
+
+          <section class="panel about" id="about">
+            <h2>About</h2>
+            <div class="item">
+              <strong>Enterprise Orchestrator Appliance</strong>
+              <small>EAAP-aligned local LLM appliance for governed planning, approvals, dry-run execution, evidence, and audit.</small>
+            </div>
+            <div class="item">
+              <strong>Demo</strong>
+              <small>https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/</small>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
 
     <script src="/app.js"></script>
   </body>

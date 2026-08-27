@@ -63,6 +63,49 @@
         font-size: 13px;
       }
 
+      .appShell {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        height: 100vh;
+        padding: 24px 18px;
+        border-right: 1px solid #d8e1ea;
+        background: #ffffff;
+      }
+
+      .sideNav {
+        display: grid;
+        gap: 6px;
+      }
+
+      .sideNav a {
+        border: 1px solid transparent;
+        border-radius: 6px;
+        padding: 10px 11px;
+        color: #465563;
+        font-size: 14px;
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .sideNav a:first-child {
+        border-color: #1d4ed8;
+        background: #2563eb;
+        color: #ffffff;
+      }
+
+      .contentShell {
+        min-width: 0;
+      }
+
       .layout {
         display: grid;
         grid-template-columns: minmax(280px, 380px) minmax(280px, 380px) minmax(360px, 1fr);
@@ -79,6 +122,7 @@
         box-shadow: 0 1px 2px rgb(24 33 43 / 8%);
       }
 
+      .wide,
       .audit {
         grid-column: 1 / -1;
       }
@@ -145,6 +189,26 @@
         color: #5e6d7a;
       }
 
+      .meter {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .bar {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #d8e1ea;
+      }
+
+      .bar span {
+        display: block;
+        width: 68%;
+        height: 100%;
+        background: #2563eb;
+      }
+
       pre {
         max-height: 420px;
         overflow: auto;
@@ -158,17 +222,37 @@
       }
 
       @media (max-width: 1100px) {
+        .appShell {
+          grid-template-columns: 220px minmax(0, 1fr);
+        }
+
         .layout {
           grid-template-columns: 1fr 1fr;
         }
 
         .audit,
+        .wide,
         .plan {
           grid-column: 1 / -1;
         }
       }
 
       @media (max-width: 720px) {
+        .appShell {
+          display: block;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid #d8e1ea;
+        }
+
+        .sideNav {
+          grid-template-columns: 1fr 1fr;
+        }
+
         header {
           align-items: flex-start;
           flex-direction: column;
@@ -185,17 +269,36 @@
     </style>
   </head>
   <body>
-    <header>
-      <div>
-        <p class="eyebrow">Static demo snapshot</p>
-        <h1>Enterprise Orchestrator</h1>
-      </div>
-      <div class="status">v0.2.0 demo · plan-only · no live execution</div>
-    </header>
+    <div class="appShell">
+      <aside class="sidebar" aria-label="Demo navigation">
+        <div>
+          <p class="eyebrow">Static demo snapshot</p>
+          <h1>Enterprise Orchestrator</h1>
+        </div>
+        <nav class="sideNav">
+          <a href="#console">Console</a>
+          <a href="#evidence">Evidence</a>
+          <a href="#approvals">Approvals</a>
+          <a href="#operations">Operations</a>
+          <a href="#history">History</a>
+          <a href="#audit">Audit</a>
+          <a href="#settings">Settings</a>
+          <a href="#about">About</a>
+        </nav>
+        <div class="status">v0.3.0 demo · plan-only · no live execution</div>
+      </aside>
 
-    <main class="layout">
-      <section class="panel">
-        <h2>Request Intake</h2>
+      <div class="contentShell">
+        <header>
+          <div>
+            <p class="eyebrow">Governed operator console</p>
+            <h2>Plan, approve, dry-run, and audit infrastructure work</h2>
+          </div>
+        </header>
+
+        <main class="layout">
+      <section class="panel" id="console">
+        <h2>Conversation</h2>
         <label>
           Operator
           <input value="operator@example.local" readonly />
@@ -211,8 +314,8 @@
         <button type="button">Generate governed plan</button>
       </section>
 
-      <section class="panel">
-        <h2>Evidence</h2>
+      <section class="panel" id="evidence">
+        <h2>Evidence Library</h2>
         <div class="item">
           <strong>VM latency observed during business hours</strong>
           <small>operator-notes · signed evidence · semantic search ready</small>
@@ -221,9 +324,13 @@
           <strong>No live cluster health output collected yet</strong>
           <small>missing evidence is surfaced before execution</small>
         </div>
+        <div class="meter">
+          <small>Evidence confidence</small>
+          <div class="bar"><span></span></div>
+        </div>
       </section>
 
-      <section class="panel plan">
+      <section class="panel plan" id="operations">
         <h2>Governed Plan</h2>
         <div class="pillRow">
           <span class="pill">Status: needs_evidence</span>
@@ -243,13 +350,70 @@
 }</pre>
       </section>
 
-      <section class="panel audit">
+      <section class="panel" id="settings">
+        <h2>Prompt Policy</h2>
+        <div class="item">
+          <strong>Enterprise Multi-Agent Orchestrator v5.6</strong>
+          <small>Evidence first · contract first · fail closed · no direct mutation</small>
+        </div>
+        <div class="item">
+          <strong>Output contract enforced</strong>
+          <small>Model output must validate before it becomes a governed plan.</small>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Runtime</h2>
+        <div class="item">
+          <strong>llama3:8b</strong>
+          <small>Ollama-compatible adapter with deterministic fallback.</small>
+        </div>
+        <div class="item">
+          <strong>FastAPI optional</strong>
+          <small>Stdlib server remains the zero-dependency appliance path.</small>
+        </div>
+      </section>
+
+      <section class="panel" id="approvals">
+        <h2>Approvals</h2>
+        <div class="item">
+          <strong>No approval required for T0 plan</strong>
+          <small>T1, T2, and T3 route through role-gated approval.</small>
+        </div>
+        <div class="item">
+          <strong>Dry-run gateway only</strong>
+          <small>Live mutation remains disabled.</small>
+        </div>
+      </section>
+
+      <section class="panel wide" id="history">
+        <h2>History</h2>
+        <div class="item">
+          <strong>req-demo-storage-latency</strong>
+          <small>Governed plan generated · evidence missing · no live execution</small>
+        </div>
+      </section>
+
+      <section class="panel audit" id="audit">
         <h2>Audit</h2>
         <div class="item">
           <strong>Audit chain valid</strong>
           <small>Demo records illustrate the tamper-evident audit model. This hosted page is static and does not connect to live infrastructure.</small>
         </div>
+        <div class="item">
+          <strong>EAAP handoff status: fail-closed</strong>
+          <small>Plan-only integration is disabled unless a control-plane URL is configured.</small>
+        </div>
       </section>
-    </main>
+      <section class="panel wide" id="about">
+        <h2>About</h2>
+        <div class="item">
+          <strong>Enterprise Orchestrator Appliance</strong>
+          <small>EAAP-aligned local LLM appliance for governed infrastructure planning, approvals, dry-run execution, signed evidence, and audit.</small>
+        </div>
+      </section>
+        </main>
+      </div>
+    </div>
   </body>
 </html>

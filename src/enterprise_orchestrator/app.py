@@ -30,7 +30,7 @@ UI_DIR = ROOT / "ui"
 
 
 class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
-    server_version = "EnterpriseOrchestrator/0.2"
+    server_version = "EnterpriseOrchestrator/0.3"
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
@@ -71,6 +71,37 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/integrations/eaap":
             self._json(ControlPlaneClient().status())
+            return
+        if parsed.path == "/api/prompt-policy":
+            prompt = _prompt_text()
+            self._json(
+                {
+                    "status": "production-oriented policy pack",
+                    "path": "prompts/enterprise-orchestrator-v5.6.md",
+                    "sha256": _sha256(prompt),
+                    "required_clauses": [
+                        "Evidence first",
+                        "Contract first",
+                        "Governance first",
+                        "Fail closed",
+                        "No invention",
+                        "No secrets",
+                        "No direct mutation",
+                    ],
+                }
+            )
+            return
+        if parsed.path == "/api/release/status":
+            self._json(
+                {
+                    "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
+                    "demo_url": _optional_file("DEMO_URL"),
+                    "demo_status": _optional_file("DEMO_STATUS"),
+                    "publication": "public",
+                    "fastapi_runtime": "optional",
+                    "appliance_image": "planned_not_validated",
+                }
+            )
             return
         if parsed.path == "/api/updates":
             self._json({"updates": list_updates()})
@@ -294,6 +325,25 @@ def run(host: str = "127.0.0.1", port: int = 8085) -> None:
     server = ThreadingHTTPServer((host, port), EnterpriseOrchestratorHandler)
     print(f"Enterprise Orchestrator Appliance listening on http://{host}:{port}")
     server.serve_forever()
+
+
+def _prompt_text() -> str:
+    return (ROOT / "prompts" / "enterprise-orchestrator-v5.6.md").read_text(
+        encoding="utf-8"
+    )
+
+
+def _sha256(value: str) -> str:
+    import hashlib
+
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _optional_file(name: str) -> str:
+    path = ROOT / name
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8").strip()
 
 
 if __name__ == "__main__":

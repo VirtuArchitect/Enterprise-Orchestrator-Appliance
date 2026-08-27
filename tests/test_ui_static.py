@@ -17,6 +17,24 @@ class OperatorUiStaticTests(unittest.TestCase):
         self.assertIn("enterprise-orchestrator-theme", app)
         self.assertIn('applyTheme(localStorage.getItem(THEME_KEY) || "light")', app)
 
+    def test_console_has_sidebar_navigation_for_operator_settings(self) -> None:
+        index = (REPO_ROOT / "ui" / "index.html").read_text(encoding="utf-8")
+        styles = (REPO_ROOT / "ui" / "styles.css").read_text(encoding="utf-8")
+
+        self.assertIn('class="sidebar"', index)
+        for target in (
+            "#console",
+            "#evidence",
+            "#approvals",
+            "#operations",
+            "#history",
+            "#audit",
+            "#settings",
+            "#about",
+        ):
+            self.assertIn(f'href="{target}"', index)
+        self.assertIn(".sideNav", styles)
+
 
 if __name__ == "__main__":
     unittest.main()

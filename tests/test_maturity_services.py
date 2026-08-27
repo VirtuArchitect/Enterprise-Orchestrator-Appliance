@@ -109,7 +109,7 @@ class MaturityServiceTests(unittest.TestCase):
             artifact_path="internal/release.tar.gz",
             sha256="abc123",
             requested_by="operator",
-            version="0.2.0",
+            version="0.3.0",
         )
 
         self.assertFalse(update["apply_enabled"])

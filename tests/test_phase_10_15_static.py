@@ -52,7 +52,44 @@ class PhaseTenToFifteenStaticTests(unittest.TestCase):
         self.assertIn(demo_url, release_notes)
         self.assertIn(demo_status, readme)
         self.assertIn(demo_status, release_notes)
-        self.assertIn("v0.2.0 demo", demo_page)
+        self.assertIn("v0.3.0 demo", demo_page)
+
+    def test_prompt_policy_contains_governed_clauses(self) -> None:
+        prompt = (
+            REPO_ROOT / "prompts" / "enterprise-orchestrator-v5.6.md"
+        ).read_text(encoding="utf-8")
+        required = [
+            "Evidence first",
+            "Contract first",
+            "Governance first",
+            "Fail closed",
+            "No invention",
+            "No secrets",
+            "No direct mutation",
+            "T0 read-only",
+            "T3 destructive",
+        ]
+
+        for clause in required:
+            self.assertIn(clause, prompt)
+
+    def test_console_exposes_policy_and_integration_controls(self) -> None:
+        index = (REPO_ROOT / "ui" / "index.html").read_text(encoding="utf-8")
+        app = (REPO_ROOT / "ui" / "app.js").read_text(encoding="utf-8")
+
+        for control in (
+            "semanticSearch",
+            "verifyEvidence",
+            "promptPolicy",
+            "releaseStatus",
+            "eaapStatus",
+        ):
+            self.assertIn(control, index)
+        self.assertIn("#settings", index)
+        self.assertIn("#about", index)
+        self.assertIn("/api/prompt-policy", app)
+        self.assertIn("/api/release/status", app)
+        self.assertIn("/api/integrations/eaap", app)
 
 
 if __name__ == "__main__":

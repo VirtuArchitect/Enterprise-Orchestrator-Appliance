@@ -13,6 +13,9 @@ Implemented user flow:
 4. Review domains, confidence, risk tier, validation, and rollback.
 5. Route approval-required work to the governed approval path.
 6. Inspect audit trail.
+7. Inspect prompt policy, release status, evidence signatures, semantic search,
+   and EAAP handoff status.
+8. Navigate operator and admin sections from the left sidebar.
 
 Run locally with:
 

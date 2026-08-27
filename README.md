@@ -85,6 +85,13 @@ Python plus a static operator UI.
 5. Add external vector/RAG infrastructure once a storage and security model is
    approved.
 
+The OpenWebUI-compatible console backlog is tracked in
+`docs/roadmap/openwebui-compatible-console.md`.
+
+The governed system prompt is tracked in
+`prompts/enterprise-orchestrator-v5.6.md` and validated by
+`scripts/validate_prompt_policy.py`.
+
 ## Verification
 
 The repository currently provides a scaffold validation command:

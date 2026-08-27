@@ -8,11 +8,12 @@ Appliance. Keep public claims aligned with implementation evidence.
 Area | Status | Evidence / boundary
 --- | --- | ---
 Repository foundation | Initialized | Project-specific README, status file, architecture docs, prompts, service boundaries, and validation script
-Prompt policy pack | Scaffolded | `prompts/enterprise-orchestrator-v5.6.md` exists; output contract is implemented as a Phase 1 schema
+Prompt policy pack | Implemented, Phase 16 | `prompts/enterprise-orchestrator-v5.6.md` contains the governed system prompt policy and output contract boundary
 Contract validation core | Implemented, Phase 1 | Dependency-free Python validator covers required fields, enums, arrays, objects, and additional-property blocking
 Governed orchestrator API | Implemented, local MVP | Stdlib HTTP facade supports health, evidence, requests, approvals, audit, and dry-run execution
 Optional FastAPI runtime | Implemented, Phase 10 | `enterprise_orchestrator.fastapi_app` exposes a dependency-gated FastAPI entrypoint when optional API dependencies are installed
-Custom operator UI | Implemented, local MVP | Static dependency-free UI supports request intake, evidence, plan review, approvals, dry-run, and audit
+Custom operator UI | Implemented, local MVP | Static dependency-free UI supports sidebar navigation, request intake, evidence, plan review, approvals, dry-run, settings, about, and audit
+OpenWebUI-compatible console roadmap | Implemented, Phase 17 | Roadmap defines adopted, governed, and deferred console features without cloning unsafe generic chatbot behavior
 Local LLM adapter | Implemented, local MVP | Ollama-compatible adapter exists; deterministic fallback keeps offline smoke tests stable
 Identity and RBAC | Implemented, Phase 11 | Local bootstrap identity store gates evidence, request, approval, dry-run, backup, and update actions by role and tenant
 Evidence service | Implemented, Phase 12 | JSON local evidence store includes content hashes and HMAC signatures backed by a local state key
@@ -28,6 +29,7 @@ MVP baseline control | Implemented, Phase 9 | Release metadata, tests, smoke che
 Release gates | Implemented, Phase 15 | `scripts/run_release_gates.py` runs metadata generation, repository validation, tests, smoke, public hygiene scan, and diff hygiene
 Docker Compose appliance profile | Implemented, local validation | Docker profile exists with digest-pinned Python base; Ollama overlay image still needs release pinning before offline release
 AHV/RHEL deployable appliance | Planned, Phase 14 | First-boot script, systemd unit, AHV/RHEL runbook, and image-build plan exist; no QCOW2, installer, or air-gapped image has been produced
+AHV/RHEL image-build execution checklist | Implemented, Phase 21 | Checklist defines inputs, build steps, evidence capture, and claim boundary for real image validation
 Production validation | Not established | No empirical enterprise deployment validation
 
 ## Validated Now
@@ -47,6 +49,12 @@ Production validation | Not established | No empirical enterprise deployment val
 - Phase 10-15 implementation adds optional FastAPI entrypoint, local RBAC,
   signed evidence, semantic evidence search, fail-closed EAAP handoff status,
   image-build planning, and release-gate automation.
+- Phase 16-21 implementation replaces the prompt scaffold, adds console
+  roadmap controls, exposes policy/release/integration status in the console,
+  adds FastAPI and EAAP validation harnesses, and documents the AHV/RHEL image
+  build evidence path.
+- Console update adds left sidebar navigation for operator, evidence, approval,
+  operations, history, audit, settings, and about sections.
 - A repository scaffold validation script exists.
 
 ## Claims To Avoid

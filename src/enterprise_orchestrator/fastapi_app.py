@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import hashlib
 from typing import Any
 
 from enterprise_orchestrator.appliance_api import appliance_status
@@ -44,6 +45,27 @@ def create_app() -> Any:
     @app.get("/api/integrations/eaap")
     def eaap_status() -> dict[str, Any]:
         return ControlPlaneClient().status()
+
+    @app.get("/api/prompt-policy")
+    def prompt_policy() -> dict[str, Any]:
+        prompt = (ROOT / "prompts" / "enterprise-orchestrator-v5.6.md").read_text(
+            encoding="utf-8"
+        )
+        return {
+            "status": "production-oriented policy pack",
+            "path": "prompts/enterprise-orchestrator-v5.6.md",
+            "sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
+        }
+
+    @app.get("/api/release/status")
+    def release_status() -> dict[str, Any]:
+        return {
+            "version": (ROOT / "VERSION").read_text(encoding="utf-8").strip(),
+            "demo_url": (ROOT / "DEMO_URL").read_text(encoding="utf-8").strip(),
+            "demo_status": (ROOT / "DEMO_STATUS").read_text(encoding="utf-8").strip(),
+            "fastapi_runtime": "optional",
+            "appliance_image": "planned_not_validated",
+        }
 
     return app
 

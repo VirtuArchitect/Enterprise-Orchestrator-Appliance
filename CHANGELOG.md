@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.3.0 - 2026-08-27
+
+- Replaced the prompt scaffold with the governed Enterprise Multi-Agent
+  Orchestrator v5.6 policy pack.
+- Added console controls for semantic evidence search, evidence signature
+  verification, prompt policy status, release status, and EAAP handoff status.
+- Added left sidebar navigation for console, evidence, approvals, operations,
+  history, audit, settings, and about sections.
+- Added an OpenWebUI-compatible console roadmap with governed/deferred feature
+  boundaries.
+- Added optional FastAPI runtime validation and mock EAAP handoff validation to
+  release gates.
+- Added AHV/RHEL image-build execution checklist.
+- Updated the static demo to present a richer appliance workflow snapshot.
+
 ## 0.2.0 - 2026-08-26
 
 - Added optional FastAPI runtime entrypoint without removing the stdlib

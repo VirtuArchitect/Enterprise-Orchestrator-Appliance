@@ -39,6 +39,13 @@ def main() -> None:
             evidence_verification = get(port, "/api/evidence/verify?tenant=smoke")
             assert evidence_verification["valid"] is True, evidence_verification
 
+            prompt_policy = get(port, "/api/prompt-policy")
+            assert prompt_policy["status"] == "production-oriented policy pack", prompt_policy
+            assert "No invention" in prompt_policy["required_clauses"], prompt_policy
+
+            release_status = get(port, "/api/release/status")
+            assert release_status["demo_status"] == "live", release_status
+
             request = post(
                 port,
                 "/api/requests",
@@ -101,7 +108,7 @@ def main() -> None:
                     "requested_by": "operator@example.local",
                     "artifact_path": "internal/release.tar.gz",
                     "sha256": "abc123",
-                    "version": "0.2.0",
+                    "version": "0.3.0",
                 },
             )
             assert update["update"]["apply_enabled"] is False, update
