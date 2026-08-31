@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -8,12 +9,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def build_plan() -> dict[str, object]:
+def build_plan(timestamp: str | None = None) -> dict[str, object]:
     return {
-        "generated_at": datetime.now(UTC).isoformat(),
+        "generated_at": timestamp or os.environ.get("EOA_RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat(),
         "artifact": "enterprise-orchestrator-appliance-image-plan",
         "status": "plan_only",
         "target": "Nutanix AHV / RHEL compatible VM image",
+        "build_script": "scripts/build_appliance_image.py",
+        "evidence_template": "docs/operations/image-build-evidence-template.md",
         "required_inputs": [
             "RHEL installation media or approved golden image",
             "offline Python runtime and optional FastAPI wheelhouse",
@@ -28,6 +31,12 @@ def build_plan() -> dict[str, object]:
             "install and enable enterprise-orchestrator.service",
             "run firstboot.sh",
             "capture image",
+            "boot cloned image and run smoke_app.py",
+        ],
+        "validation": [
+            "run scripts/build_appliance_image.py in default plan mode",
+            "run scripts/validate_release_artifacts.py",
+            "capture offline artifact checksums before transfer",
             "boot cloned image and run smoke_app.py",
         ],
         "non_claim": "This plan does not produce or validate a QCOW2 image.",

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -17,7 +18,7 @@ DEFAULT_EXCLUDES = {
 }
 
 
-def main() -> None:
+def build_manifest(timestamp: str | None = None) -> dict[str, object]:
     output = ROOT / "deployments" / "appliance" / "artifact-manifest.json"
     records = []
     for path in sorted(ROOT.rglob("*")):
@@ -33,12 +34,18 @@ def main() -> None:
                 "bytes": path.stat().st_size,
             }
         )
-    payload = {
-        "generated_at": datetime.now(UTC).isoformat(),
+    return {
+        "generated_at": timestamp or os.environ.get("EOA_RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat(),
         "artifact": "enterprise-orchestrator-appliance-source",
         "files": records,
     }
+
+
+def main() -> None:
+    output = ROOT / "deployments" / "appliance" / "artifact-manifest.json"
+    payload = build_manifest()
     output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    records = payload["files"]
     print(f"Wrote {output.relative_to(ROOT)} with {len(records)} files.")
 
 

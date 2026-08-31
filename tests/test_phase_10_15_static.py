@@ -52,7 +52,7 @@ class PhaseTenToFifteenStaticTests(unittest.TestCase):
         self.assertIn(demo_url, release_notes)
         self.assertIn(demo_status, readme)
         self.assertIn(demo_status, release_notes)
-        self.assertIn("v0.3.0 demo", demo_page)
+        self.assertIn("v0.4.0 demo", demo_page)
 
     def test_prompt_policy_contains_governed_clauses(self) -> None:
         prompt = (

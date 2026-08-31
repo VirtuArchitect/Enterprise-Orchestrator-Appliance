@@ -11,9 +11,12 @@ from urllib.parse import parse_qs, urlparse
 
 from enterprise_orchestrator.appliance_api import appliance_status
 from enterprise_orchestrator.appliance_api.operations import create_backup, list_updates, stage_update
+from enterprise_orchestrator.appliance_api.settings import admin_settings
 from enterprise_orchestrator.approval_workflow import ApprovalQueue
 from enterprise_orchestrator.audit_service import AuditStore
+from enterprise_orchestrator.conversation_service import ConversationStore
 from enterprise_orchestrator.eaap_integration import ControlPlaneClient
+from enterprise_orchestrator.evidence_service.attachments import EvidenceAttachmentStore
 from enterprise_orchestrator.evidence_service import EvidenceStore
 from enterprise_orchestrator.execution_gateway.connectors import ReadOnlyDiagnosticConnector
 from enterprise_orchestrator.execution_gateway import DryRunExecutionGateway
@@ -30,7 +33,7 @@ UI_DIR = ROOT / "ui"
 
 
 class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
-    server_version = "EnterpriseOrchestrator/0.3"
+    server_version = "EnterpriseOrchestrator/0.4"
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
@@ -40,6 +43,13 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/evidence":
             tenant = parse_qs(parsed.query).get("tenant", [None])[0]
             self._json({"evidence": EvidenceStore().list(tenant=tenant)})
+            return
+        if parsed.path == "/api/evidence/attachments":
+            query = parse_qs(parsed.query)
+            actor = query.get("operator", ["operator@example.local"])[0]
+            tenant = query.get("tenant", ["default"])[0]
+            IdentityService().require(actor, "evidence_attachment:read", tenant)
+            self._json({"attachments": EvidenceAttachmentStore().list(tenant=tenant)})
             return
         if parsed.path == "/api/evidence/search":
             query = parse_qs(parsed.query).get("q", [""])[0]
@@ -59,6 +69,16 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             tenant = parse_qs(parsed.query).get("tenant", [None])[0]
             self._json({"requests": list_requests(tenant=tenant)})
             return
+        if parsed.path == "/api/conversations":
+            query = parse_qs(parsed.query)
+            tenant = query.get("tenant", ["default"])[0]
+            operator = query.get("operator", [None])[0]
+            actor = operator or "operator@example.local"
+            IdentityService().require(actor, "conversation:read", tenant)
+            self._json(
+                {"conversations": ConversationStore().list(tenant=tenant, operator=operator)}
+            )
+            return
         if parsed.path == "/api/approvals":
             tenant = parse_qs(parsed.query).get("tenant", [None])[0]
             self._json({"approvals": ApprovalQueue().list(tenant=tenant)})
@@ -71,6 +91,21 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             return
         if parsed.path == "/api/integrations/eaap":
             self._json(ControlPlaneClient().status())
+            return
+        if parsed.path == "/api/integrations/eaap/validation-plan":
+            self._json(ControlPlaneClient().validation_plan())
+            return
+        if parsed.path == "/api/identity/status":
+            from enterprise_orchestrator.identity_service.adapters import identity_adapter_status
+
+            self._json(identity_adapter_status())
+            return
+        if parsed.path == "/api/admin/settings":
+            query = parse_qs(parsed.query)
+            actor = query.get("operator", ["operator@example.local"])[0]
+            tenant = query.get("tenant", ["default"])[0]
+            IdentityService().require(actor, "settings:read", tenant)
+            self._json(admin_settings(ROOT))
             return
         if parsed.path == "/api/prompt-policy":
             prompt = _prompt_text()
@@ -120,8 +155,17 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
             if parsed.path == "/api/evidence":
                 self._create_evidence(payload)
                 return
+            if parsed.path == "/api/evidence/attachments":
+                self._create_evidence_attachment(payload)
+                return
             if parsed.path == "/api/requests":
                 self._create_request(payload)
+                return
+            if parsed.path == "/api/conversations":
+                self._create_conversation(payload)
+                return
+            if parsed.path == "/api/conversations/messages":
+                self._append_conversation_message(payload)
                 return
             if parsed.path == "/api/approvals/decide":
                 self._decide_approval(payload)
@@ -164,6 +208,29 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
         )
         self._json({"evidence": record}, HTTPStatus.CREATED)
 
+    def _create_evidence_attachment(self, payload: dict[str, Any]) -> None:
+        actor = payload.get("submitted_by", "operator")
+        tenant = payload.get("tenant", "default")
+        IdentityService().require(actor, "evidence_attachment:create", tenant)
+        attachment = EvidenceAttachmentStore().add(
+            tenant=tenant,
+            submitted_by=actor,
+            filename=payload["filename"],
+            content_base64=payload["content_base64"],
+            classification=payload.get("classification", "operator_provided"),
+        )
+        AuditStore().append(
+            "evidence.attachment.created",
+            tenant=tenant,
+            actor=actor,
+            payload={
+                "attachment_id": attachment["attachment_id"],
+                "filename": attachment["filename"],
+                "sha256": attachment["sha256"],
+            },
+        )
+        self._json({"attachment": attachment}, HTTPStatus.CREATED)
+
     def _create_request(self, payload: dict[str, Any]) -> None:
         IdentityService().require(
             payload.get("submitted_by", "operator"),
@@ -203,6 +270,46 @@ class EnterpriseOrchestratorHandler(BaseHTTPRequestHandler):
                 },
             )
         self._json({"request": envelope, "approval": approval}, HTTPStatus.CREATED)
+
+    def _create_conversation(self, payload: dict[str, Any]) -> None:
+        actor = payload.get("operator", payload.get("submitted_by", "operator"))
+        tenant = payload.get("tenant", "default")
+        IdentityService().require(actor, "conversation:create", tenant)
+        conversation = ConversationStore().create(
+            tenant=tenant,
+            operator=actor,
+            title=payload.get("title", "Untitled conversation"),
+        )
+        AuditStore().append(
+            "conversation.created",
+            tenant=tenant,
+            actor=actor,
+            payload={"conversation_id": conversation["conversation_id"]},
+        )
+        self._json({"conversation": conversation}, HTTPStatus.CREATED)
+
+    def _append_conversation_message(self, payload: dict[str, Any]) -> None:
+        actor = payload.get("operator", payload.get("submitted_by", "operator"))
+        tenant = payload.get("tenant", "default")
+        IdentityService().require(actor, "conversation:append", tenant)
+        conversation = ConversationStore().append(
+            conversation_id=payload["conversation_id"],
+            tenant=tenant,
+            operator=actor,
+            role=payload["role"],
+            content=payload["content"],
+            metadata=payload.get("metadata", {}),
+        )
+        AuditStore().append(
+            "conversation.message.appended",
+            tenant=tenant,
+            actor=actor,
+            payload={
+                "conversation_id": conversation["conversation_id"],
+                "role": payload["role"],
+            },
+        )
+        self._json({"conversation": conversation})
 
     def _decide_approval(self, payload: dict[str, Any]) -> None:
         IdentityService().require(

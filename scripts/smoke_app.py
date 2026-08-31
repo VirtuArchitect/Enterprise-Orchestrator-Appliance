@@ -46,6 +46,49 @@ def main() -> None:
             release_status = get(port, "/api/release/status")
             assert release_status["demo_status"] == "live", release_status
 
+            settings = get(
+                port,
+                "/api/admin/settings?tenant=smoke&operator=operator@example.local",
+            )
+            assert settings["updates"]["apply_enabled"] is False, settings
+
+            identity = get(port, "/api/identity/status")
+            assert identity["mode"] == "local-bootstrap", identity
+
+            conversation = post(
+                port,
+                "/api/conversations",
+                {
+                    "tenant": "smoke",
+                    "operator": "operator@example.local",
+                    "title": "Smoke conversation",
+                },
+            )["conversation"]
+            conversation = post(
+                port,
+                "/api/conversations/messages",
+                {
+                    "tenant": "smoke",
+                    "operator": "operator@example.local",
+                    "conversation_id": conversation["conversation_id"],
+                    "role": "user",
+                    "content": "Capture this context.",
+                },
+            )["conversation"]
+            assert len(conversation["messages"]) == 1, conversation
+
+            attachment = post(
+                port,
+                "/api/evidence/attachments",
+                {
+                    "tenant": "smoke",
+                    "submitted_by": "operator@example.local",
+                    "filename": "smoke.txt",
+                    "content_base64": "c21va2U=",
+                },
+            )["attachment"]
+            assert attachment["bytes"] == 5, attachment
+
             request = post(
                 port,
                 "/api/requests",
@@ -93,6 +136,9 @@ def main() -> None:
             eaap_status = get(port, "/api/integrations/eaap")
             assert eaap_status["configured"] is False, eaap_status
 
+            eaap_validation = get(port, "/api/integrations/eaap/validation-plan")
+            assert eaap_validation["validation_mode"] == "skipped_until_configured", eaap_validation
+
             backup = post(
                 port,
                 "/api/backup",
@@ -108,7 +154,7 @@ def main() -> None:
                     "requested_by": "operator@example.local",
                     "artifact_path": "internal/release.tar.gz",
                     "sha256": "abc123",
-                    "version": "0.3.0",
+                    "version": "0.4.0",
                 },
             )
             assert update["update"]["apply_enabled"] is False, update

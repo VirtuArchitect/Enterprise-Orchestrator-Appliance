@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0 - 2026-08-31
+
+- Added read-only release artifact validation and moved SBOM/image-plan/manifest
+  regeneration to an explicit release command.
+- Added tenant-scoped conversation persistence for operator/request context.
+- Added hashed local evidence attachment storage with path and size guards.
+- Added admin settings, identity status, and EAAP validation-plan API surfaces.
+- Added plan-only appliance image build validation and evidence template.
+- Updated the console and static demo for Phases 22-28.
+
 ## 0.3.0 - 2026-08-27
 
 - Replaced the prompt scaffold with the governed Enterprise Multi-Agent

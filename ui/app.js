@@ -1,5 +1,7 @@
 const state = {
   evidence: [],
+  conversations: [],
+  currentConversationId: null,
   currentRequest: null,
 };
 
@@ -44,6 +46,24 @@ function renderEvidence() {
         <div class="item">
           <strong>${escapeHtml(item.summary)}</strong>
           <small>${escapeHtml(item.evidence_id)} · ${escapeHtml(item.source)}</small>
+        </div>
+      `,
+    )
+    .join("");
+}
+
+function renderConversations() {
+  const list = $("conversationList");
+  if (!state.conversations.length) {
+    list.innerHTML = '<div class="empty">No conversations yet.</div>';
+    return;
+  }
+  list.innerHTML = state.conversations
+    .map(
+      (item) => `
+        <div class="item">
+          <strong>${escapeHtml(item.title)}</strong>
+          <small>${escapeHtml(item.conversation_id)} · ${item.messages.length} messages</small>
         </div>
       `,
     )
@@ -126,6 +146,14 @@ async function refreshHistory() {
     .join("");
 }
 
+async function refreshConversations() {
+  const payload = await api(
+    `/api/conversations?tenant=${encodeURIComponent($("tenant").value)}&operator=${encodeURIComponent($("operator").value)}`,
+  );
+  state.conversations = payload.conversations;
+  renderConversations();
+}
+
 async function refreshAudit() {
   const payload = await api(`/api/audit?tenant=${encodeURIComponent($("tenant").value)}`);
   $("auditState").textContent = payload.chain_valid
@@ -175,6 +203,48 @@ $("addEvidence").addEventListener("click", async () => {
   await refreshAudit();
 });
 
+$("uploadAttachment").addEventListener("click", async () => {
+  const file = $("evidenceAttachment").files[0];
+  if (!file) {
+    $("opsJson").textContent = JSON.stringify({ error: "select_attachment" }, null, 2);
+    return;
+  }
+  const content = await file.arrayBuffer();
+  const bytes = new Uint8Array(content);
+  let binary = "";
+  bytes.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  $("opsJson").textContent = JSON.stringify(
+    await api("/api/evidence/attachments", {
+      method: "POST",
+      body: JSON.stringify({
+        tenant: $("tenant").value,
+        submitted_by: $("operator").value,
+        filename: file.name,
+        content_base64: btoa(binary),
+      }),
+    }),
+    null,
+    2,
+  );
+  await refreshAudit();
+});
+
+$("newConversation").addEventListener("click", async () => {
+  const payload = await api("/api/conversations", {
+    method: "POST",
+    body: JSON.stringify({
+      tenant: $("tenant").value,
+      operator: $("operator").value,
+      title: $("conversationTitle").value,
+    }),
+  });
+  state.currentConversationId = payload.conversation.conversation_id;
+  await refreshConversations();
+  await refreshAudit();
+});
+
 $("submitRequest").addEventListener("click", async () => {
   const payload = await api("/api/requests", {
     method: "POST",
@@ -187,7 +257,41 @@ $("submitRequest").addEventListener("click", async () => {
     }),
   });
   state.currentRequest = payload.request;
+  if (!state.currentConversationId) {
+    const conversation = await api("/api/conversations", {
+      method: "POST",
+      body: JSON.stringify({
+        tenant: $("tenant").value,
+        operator: $("operator").value,
+        title: $("conversationTitle").value || $("task").value.slice(0, 80),
+      }),
+    });
+    state.currentConversationId = conversation.conversation.conversation_id;
+  }
+  await api("/api/conversations/messages", {
+    method: "POST",
+    body: JSON.stringify({
+      tenant: $("tenant").value,
+      operator: $("operator").value,
+      conversation_id: state.currentConversationId,
+      role: "user",
+      content: $("task").value,
+      metadata: { request_id: payload.request.request_id },
+    }),
+  });
+  await api("/api/conversations/messages", {
+    method: "POST",
+    body: JSON.stringify({
+      tenant: $("tenant").value,
+      operator: $("operator").value,
+      conversation_id: state.currentConversationId,
+      role: "assistant",
+      content: payload.request.plan.summary,
+      metadata: { request_id: payload.request.request_id, plan_hash: payload.request.plan_hash },
+    }),
+  });
   renderPlan(payload.request);
+  await refreshConversations();
   await refreshApprovals();
   await refreshAudit();
   await refreshHistory();
@@ -273,7 +377,7 @@ $("stageUpdate").addEventListener("click", async () => {
       body: JSON.stringify({
         tenant: $("tenant").value,
         requested_by: $("operator").value,
-        version: "0.3.0-local",
+        version: "0.4.0-local",
         artifact_path: "internal-artifact-repository/enterprise-orchestrator.tar.gz",
         sha256: "replace-with-verified-sha256-before-transfer",
         notes: "Sample staged request; apply is disabled.",
@@ -297,6 +401,26 @@ $("eaapStatus").addEventListener("click", async () => {
   $("opsJson").textContent = JSON.stringify(await api("/api/integrations/eaap"), null, 2);
 });
 
+$("eaapValidation").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(
+    await api("/api/integrations/eaap/validation-plan"),
+    null,
+    2,
+  );
+});
+
+$("identityStatus").addEventListener("click", async () => {
+  $("opsJson").textContent = JSON.stringify(await api("/api/identity/status"), null, 2);
+});
+
+$("adminSettings").addEventListener("click", async () => {
+  const payload = await api(
+    `/api/admin/settings?tenant=${encodeURIComponent($("tenant").value)}&operator=${encodeURIComponent($("operator").value)}`,
+  );
+  $("settingsSummary").textContent = `${payload.version} · ${payload.identity.mode} · apply ${payload.updates.apply_enabled ? "enabled" : "disabled"}`;
+  $("opsJson").textContent = JSON.stringify(payload, null, 2);
+});
+
 $("themeToggle").addEventListener("click", () => {
   const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
   const next = current === "dark" ? "light" : "dark";
@@ -309,6 +433,7 @@ async function boot() {
   const health = await api("/api/health");
   $("runtimeStatus").textContent = `${health.status} · ${health.runtime.llm_provider} · ${health.runtime.model}`;
   renderEvidence();
+  await refreshConversations();
   await refreshApprovals();
   await refreshAudit();
   await refreshHistory();

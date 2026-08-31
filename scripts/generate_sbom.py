@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -8,14 +9,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def main() -> None:
-    output = ROOT / "deployments" / "appliance" / "sbom.json"
-    payload = {
+def build_sbom(timestamp: str | None = None) -> dict[str, object]:
+    return {
         "bomFormat": "CycloneDX",
         "specVersion": "1.5",
         "version": 1,
         "metadata": {
-            "timestamp": datetime.now(UTC).isoformat(),
+            "timestamp": timestamp or os.environ.get("EOA_RELEASE_TIMESTAMP") or datetime.now(UTC).isoformat(),
             "component": {
                 "type": "application",
                 "name": "enterprise-orchestrator-appliance",
@@ -43,6 +43,11 @@ def main() -> None:
             },
         ],
     }
+
+
+def main() -> None:
+    output = ROOT / "deployments" / "appliance" / "sbom.json"
+    payload = build_sbom()
     output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(f"Wrote {output.relative_to(ROOT)}.")
 

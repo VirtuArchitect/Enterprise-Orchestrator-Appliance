@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 import tempfile
 import unittest
 
@@ -9,10 +10,14 @@ from enterprise_orchestrator.appliance_api.operations import (
     list_updates,
     stage_update,
 )
+from enterprise_orchestrator.appliance_api.settings import admin_settings
+from enterprise_orchestrator.conversation_service import ConversationStore
 from enterprise_orchestrator.eaap_integration import ControlPlaneClient
+from enterprise_orchestrator.evidence_service.attachments import EvidenceAttachmentStore
 from enterprise_orchestrator.evidence_service import EvidenceStore
 from enterprise_orchestrator.execution_gateway.connectors import ReadOnlyDiagnosticConnector
 from enterprise_orchestrator.governance_engine import GovernanceEvaluator
+from enterprise_orchestrator.identity_service.adapters import identity_adapter_status
 from enterprise_orchestrator.identity_service import IdentityService
 from enterprise_orchestrator.llm_adapter.client import _load_json_response
 
@@ -76,6 +81,41 @@ class MaturityServiceTests(unittest.TestCase):
 
         self.assertFalse(store.verify(record))
 
+    def test_evidence_attachment_store_hashes_content_and_rejects_paths(self) -> None:
+        store = EvidenceAttachmentStore()
+
+        record = store.add(
+            tenant="lab",
+            submitted_by="operator",
+            filename="notes.txt",
+            content_base64="aGVsbG8=",
+        )
+
+        self.assertEqual(record["bytes"], 5)
+        self.assertEqual(record["filename"], "notes.txt")
+        self.assertEqual(len(record["sha256"]), 64)
+        self.assertEqual(store.list("lab")[0]["attachment_id"], record["attachment_id"])
+        with self.assertRaises(ValueError):
+            store.add("lab", "operator", "../secret.txt", "aGVsbG8=")
+        with self.assertRaises(ValueError):
+            store.add("lab", "operator", "..\\secret.txt", "aGVsbG8=")
+
+    def test_conversation_store_scopes_messages_by_tenant_and_operator(self) -> None:
+        store = ConversationStore()
+        created = store.create("lab", "operator@example.local", "Latency triage")
+
+        updated = store.append(
+            conversation_id=created["conversation_id"],
+            tenant="lab",
+            operator="operator@example.local",
+            role="user",
+            content="Check storage latency.",
+        )
+
+        self.assertEqual(updated["messages"][0]["role"], "user")
+        self.assertEqual(len(store.list("lab", "operator@example.local")), 1)
+        self.assertEqual(store.list("prod", "operator@example.local"), [])
+
     def test_identity_rbac_defaults_to_fail_closed_for_unknown_actor(self) -> None:
         identity = IdentityService()
 
@@ -89,12 +129,23 @@ class MaturityServiceTests(unittest.TestCase):
         self.assertTrue(identity.can("approver@example.local", "approval:decide", "lab"))
         self.assertFalse(identity.can("approver@example.local", "approval:decide", "prod"))
 
+    def test_identity_adapter_defaults_to_local_bootstrap(self) -> None:
+        self.assertEqual(identity_adapter_status()["mode"], "local-bootstrap")
+        self.assertEqual(identity_adapter_status()["boundary"], "local_bootstrap_only")
+
     def test_eaap_client_is_disabled_until_configured(self) -> None:
         client = ControlPlaneClient(base_url="")
 
         self.assertFalse(client.status()["configured"])
+        self.assertEqual(client.validation_plan()["validation_mode"], "skipped_until_configured")
         with self.assertRaises(RuntimeError):
             client.handoff_plan({"request_id": "req-test"})
+
+    def test_admin_settings_keeps_mutating_controls_disabled(self) -> None:
+        settings = admin_settings(Path(__file__).resolve().parents[1])
+
+        self.assertFalse(settings["execution"]["live_mutation_enabled"])
+        self.assertFalse(settings["updates"]["apply_enabled"])
 
     def test_connector_catalogue_only_plans_commands(self) -> None:
         connector = ReadOnlyDiagnosticConnector()
@@ -109,7 +160,7 @@ class MaturityServiceTests(unittest.TestCase):
             artifact_path="internal/release.tar.gz",
             sha256="abc123",
             requested_by="operator",
-            version="0.3.0",
+            version="0.4.0",
         )
 
         self.assertFalse(update["apply_enabled"])

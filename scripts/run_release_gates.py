@@ -9,12 +9,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 COMMANDS = [
-    [sys.executable, "scripts/generate_sbom.py"],
-    [sys.executable, "scripts/plan_appliance_image.py"],
-    [sys.executable, "scripts/generate_artifact_manifest.py"],
+    [sys.executable, "scripts/validate_release_artifacts.py"],
     [sys.executable, "scripts/validate_repository.py"],
     [sys.executable, "scripts/validate_demo_link.py"],
     [sys.executable, "scripts/validate_prompt_policy.py"],
+    [sys.executable, "scripts/validate_eaap_integration_config.py"],
+    [sys.executable, "scripts/build_appliance_image.py"],
     [sys.executable, "scripts/validate_fastapi_runtime.py"],
     [sys.executable, "scripts/validate_eaap_handoff.py"],
     [sys.executable, "-m", "unittest", "discover", "-s", "tests"],

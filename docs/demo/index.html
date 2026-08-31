@@ -277,6 +277,7 @@
         </div>
         <nav class="sideNav">
           <a href="#console">Console</a>
+          <a href="#conversations">Conversations</a>
           <a href="#evidence">Evidence</a>
           <a href="#approvals">Approvals</a>
           <a href="#operations">Operations</a>
@@ -285,7 +286,7 @@
           <a href="#settings">Settings</a>
           <a href="#about">About</a>
         </nav>
-        <div class="status">v0.3.0 demo · plan-only · no live execution</div>
+        <div class="status">v0.4.0 demo · plan-only · no live execution</div>
       </aside>
 
       <div class="contentShell">
@@ -298,7 +299,7 @@
 
         <main class="layout">
       <section class="panel" id="console">
-        <h2>Conversation</h2>
+        <h2>Request Intake</h2>
         <label>
           Operator
           <input value="operator@example.local" readonly />
@@ -314,6 +315,18 @@
         <button type="button">Generate governed plan</button>
       </section>
 
+      <section class="panel" id="conversations">
+        <h2>Conversations</h2>
+        <div class="item">
+          <strong>Nutanix performance triage</strong>
+          <small>tenant lab · operator@example.local · 2 messages</small>
+        </div>
+        <div class="item">
+          <strong>Plan context persisted locally</strong>
+          <small>Conversation records stay tenant and operator scoped.</small>
+        </div>
+      </section>
+
       <section class="panel" id="evidence">
         <h2>Evidence Library</h2>
         <div class="item">
@@ -323,6 +336,10 @@
         <div class="item">
           <strong>No live cluster health output collected yet</strong>
           <small>missing evidence is surfaced before execution</small>
+        </div>
+        <div class="item">
+          <strong>latency-notes.txt</strong>
+          <small>attachment SHA256 tracked · path guarded · local storage</small>
         </div>
         <div class="meter">
           <small>Evidence confidence</small>
@@ -360,6 +377,10 @@
           <strong>Output contract enforced</strong>
           <small>Model output must validate before it becomes a governed plan.</small>
         </div>
+        <div class="item">
+          <strong>Admin settings surface</strong>
+          <small>Runtime, release, EAAP, identity, update, and execution boundaries are visible.</small>
+        </div>
       </section>
 
       <section class="panel">
@@ -371,6 +392,10 @@
         <div class="item">
           <strong>FastAPI optional</strong>
           <small>Stdlib server remains the zero-dependency appliance path.</small>
+        </div>
+        <div class="item">
+          <strong>Image build validator</strong>
+          <small>Plan-only by default; no AHV/RHEL image is claimed.</small>
         </div>
       </section>
 
@@ -403,6 +428,10 @@
         <div class="item">
           <strong>EAAP handoff status: fail-closed</strong>
           <small>Plan-only integration is disabled unless a control-plane URL is configured.</small>
+        </div>
+        <div class="item">
+          <strong>Release gates: read-only</strong>
+          <small>SBOM, image-plan, and manifest validation no longer rewrites generated files.</small>
         </div>
       </section>
       <section class="panel wide" id="about">

@@ -1,6 +1,8 @@
 {
   "artifact": "enterprise-orchestrator-appliance-image-plan",
-  "generated_at": "2026-08-27T06:16:10.094698+00:00",
+  "build_script": "scripts/build_appliance_image.py",
+  "evidence_template": "docs/operations/image-build-evidence-template.md",
+  "generated_at": "2026-08-31T06:05:58.071338+00:00",
   "non_claim": "This plan does not produce or validate a QCOW2 image.",
   "phases": [
     "install base OS",
@@ -19,5 +21,11 @@
     "signed source release artifact and artifact-manifest.json"
   ],
   "status": "plan_only",
-  "target": "Nutanix AHV / RHEL compatible VM image"
+  "target": "Nutanix AHV / RHEL compatible VM image",
+  "validation": [
+    "run scripts/build_appliance_image.py in default plan mode",
+    "run scripts/validate_release_artifacts.py",
+    "capture offline artifact checksums before transfer",
+    "boot cloned image and run smoke_app.py"
+  ]
 }

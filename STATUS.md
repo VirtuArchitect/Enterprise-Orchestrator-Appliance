@@ -15,9 +15,11 @@ Optional FastAPI runtime | Implemented, Phase 10 | `enterprise_orchestrator.fast
 Custom operator UI | Implemented, local MVP | Static dependency-free UI supports sidebar navigation, request intake, evidence, plan review, approvals, dry-run, settings, about, and audit
 OpenWebUI-compatible console roadmap | Implemented, Phase 17 | Roadmap defines adopted, governed, and deferred console features without cloning unsafe generic chatbot behavior
 Local LLM adapter | Implemented, local MVP | Ollama-compatible adapter exists; deterministic fallback keeps offline smoke tests stable
-Identity and RBAC | Implemented, Phase 11 | Local bootstrap identity store gates evidence, request, approval, dry-run, backup, and update actions by role and tenant
+Identity and RBAC | Implemented, Phase 26 | Local bootstrap identity store gates evidence, conversations, requests, approvals, dry-run, backup, updates, and admin settings by role and tenant; enterprise identity adapter status is exposed but not token-enforced
 Evidence service | Implemented, Phase 12 | JSON local evidence store includes content hashes and HMAC signatures backed by a local state key
+Evidence attachments | Implemented, Phase 24 | Local attachment metadata and content storage includes SHA256 hashes, file-name path guards, and a 1 MiB JSON upload limit
 Evidence retrieval | Implemented, Phase 12 | Keyword and dependency-free semantic retrieval exist; external vector database/RAG service is not implemented
+Conversation store | Implemented, Phase 23 | Tenant/operator-scoped conversation records persist user and assistant messages in local JSON state
 Approval workflow | Implemented, local MVP | Plan-hash-bound local approval queue exists and is now RBAC-gated
 Execution gateway | Implemented, dry-run only | Non-dry-run modes fail closed; T1+ dry-runs require approval
 EAAP integration | Implemented, Phase 13 | Control-plane client and status endpoint fail closed unless `EOA_EAAP_CONTROL_PLANE_URL` is configured; handoff is plan-only
@@ -26,9 +28,9 @@ Audit service | Implemented, local MVP | JSONL tamper-evident hash chain exists
 Appliance operations | Implemented, local MVP | Backup creation, support-bundle export script, and update staging exist; update apply is disabled
 Release candidate assets | Implemented, local MVP | Version, changelog, release notes, SBOM generation, and artifact manifest exist
 MVP baseline control | Implemented, Phase 9 | Release metadata, tests, smoke checks, and local status evidence are refreshed before baseline commit/tag
-Release gates | Implemented, Phase 15 | `scripts/run_release_gates.py` runs metadata generation, repository validation, tests, smoke, public hygiene scan, and diff hygiene
+Release gates | Implemented, Phase 22 | `scripts/run_release_gates.py` validates release artifacts without regenerating them, then runs repository validation, tests, smoke, public hygiene scan, Compose config, and diff hygiene
 Docker Compose appliance profile | Implemented, local validation | Docker profile exists with digest-pinned Python base; Ollama overlay image still needs release pinning before offline release
-AHV/RHEL deployable appliance | Planned, Phase 14 | First-boot script, systemd unit, AHV/RHEL runbook, and image-build plan exist; no QCOW2, installer, or air-gapped image has been produced
+AHV/RHEL deployable appliance | Planned, Phase 28 | First-boot script, systemd unit, AHV/RHEL runbook, image-build plan, plan-only build validator, and evidence template exist; no QCOW2, installer, or air-gapped image has been produced
 AHV/RHEL image-build execution checklist | Implemented, Phase 21 | Checklist defines inputs, build steps, evidence capture, and claim boundary for real image validation
 Production validation | Not established | No empirical enterprise deployment validation
 
@@ -53,6 +55,9 @@ Production validation | Not established | No empirical enterprise deployment val
   roadmap controls, exposes policy/release/integration status in the console,
   adds FastAPI and EAAP validation harnesses, and documents the AHV/RHEL image
   build evidence path.
+- Phase 22-28 implementation makes release gates non-mutating, adds
+  conversations, evidence attachments, admin settings, identity adapter status,
+  EAAP validation planning, and plan-only image build validation.
 - Console update adds left sidebar navigation for operator, evidence, approval,
   operations, history, audit, settings, and about sections.
 - A repository scaffold validation script exists.

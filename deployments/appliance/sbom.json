@@ -24,9 +24,9 @@
     "component": {
       "name": "enterprise-orchestrator-appliance",
       "type": "application",
-      "version": "0.3.0"
+      "version": "0.4.0"
     },
-    "timestamp": "2026-08-27T06:16:09.928894+00:00"
+    "timestamp": "2026-08-31T06:05:58.070493+00:00"
   },
   "specVersion": "1.5",
   "version": 1

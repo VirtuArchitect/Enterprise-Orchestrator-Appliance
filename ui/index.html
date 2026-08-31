@@ -15,6 +15,7 @@
         </div>
         <nav class="sideNav">
           <a href="#console">Console</a>
+          <a href="#conversations">Conversations</a>
           <a href="#evidence">Evidence</a>
           <a href="#approvals">Approvals</a>
           <a href="#operations">Operations</a>
@@ -71,6 +72,18 @@
         <button id="submitRequest">Generate governed plan</button>
       </section>
 
+      <section class="panel conversations" id="conversations">
+        <div class="sectionHead">
+          <h2>Conversations</h2>
+          <button id="newConversation">New</button>
+        </div>
+        <label>
+          Title
+          <input id="conversationTitle" value="Nutanix performance triage" />
+        </label>
+        <div id="conversationList" class="list"></div>
+      </section>
+
       <section class="panel evidence" id="evidence">
         <h2>Evidence</h2>
         <label>
@@ -86,6 +99,11 @@
           <textarea id="evidenceContent" rows="5">No cluster health output collected yet.</textarea>
         </label>
         <button id="addEvidence">Add evidence</button>
+        <label>
+          Attachment
+          <input id="evidenceAttachment" type="file" />
+        </label>
+        <button id="uploadAttachment">Upload attachment</button>
         <label>
           Search Evidence
           <input id="evidenceSearch" placeholder="storage latency dns" />
@@ -119,6 +137,9 @@
         <button id="promptPolicy">Prompt policy</button>
         <button id="releaseStatus">Release status</button>
         <button id="eaapStatus">EAAP handoff status</button>
+        <button id="eaapValidation">EAAP validation plan</button>
+        <button id="identityStatus">Identity status</button>
+        <button id="adminSettings">Admin settings</button>
         <pre id="opsJson"></pre>
       </section>
 
@@ -145,6 +166,10 @@
             <div class="item">
               <strong>Execution boundary</strong>
               <small>Dry-run only; live mutation remains disabled.</small>
+            </div>
+            <div class="item">
+              <strong>Admin surface</strong>
+              <small id="settingsSummary">Settings not loaded.</small>
             </div>
           </section>
 

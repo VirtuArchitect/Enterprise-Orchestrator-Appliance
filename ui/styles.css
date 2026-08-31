@@ -167,6 +167,7 @@ h2 {
 .plan,
 .audit,
 .history,
+.conversations,
 .settings,
 .about {
   grid-column: span 1;
@@ -322,6 +323,7 @@ pre {
 
   .plan,
   .audit,
+  .conversations,
   .settings,
   .about {
     grid-column: 1 / -1;
@@ -366,6 +368,7 @@ pre {
 
   .plan,
   .audit,
+  .conversations,
   .settings,
   .about {
     grid-column: auto;

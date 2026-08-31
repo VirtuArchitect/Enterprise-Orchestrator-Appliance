@@ -20,6 +20,16 @@ class ControlPlaneClient:
             "boundary": "disabled_fail_closed" if not self.base_url else "plan_handoff_only",
         }
 
+    def validation_plan(self) -> dict[str, Any]:
+        return {
+            "configured": bool(self.base_url),
+            "base_url": self.base_url or None,
+            "required_endpoint": "/api/plan-handoffs",
+            "required_contract": "governed request envelope with plan_hash",
+            "validation_mode": "skipped_until_configured" if not self.base_url else "configured",
+            "non_claim": "This validation path does not execute infrastructure mutation.",
+        }
+
     def handoff_plan(self, envelope: dict[str, Any]) -> dict[str, Any]:
         if not self.base_url:
             raise RuntimeError("EAAP control-plane integration is not configured")

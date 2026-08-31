@@ -63,7 +63,7 @@ services/                     Backend service boundaries
   evidence-service/           Local evidence ingestion and retrieval
   llm-adapter/                Local model runtime gateway
   orchestrator-api/           Request intake and plan orchestration
-ui/                           Future React operator console
+ui/                           Static dependency-free operator console
 deployments/                  Docker and appliance packaging assets
 scripts/                      Local validation and project utilities
 tests/                        Unit, integration, and smoke tests
@@ -117,7 +117,14 @@ $env:PYTHONPATH = "src"
 python scripts/smoke_app.py
 ```
 
-Run the Phase 15 release gates with:
+Regenerate release artifacts explicitly with:
+
+```powershell
+$env:PYTHONPATH = "src"
+python scripts/generate_release_artifacts.py
+```
+
+Run the Phase 22 read-only release gates with:
 
 ```powershell
 $env:PYTHONPATH = "src"

@@ -11,14 +11,19 @@ from enterprise_orchestrator.paths import ensure_state_dir
 ROLE_PERMISSIONS = {
     "viewer": {
         "evidence:read",
+        "evidence_attachment:read",
         "request:read",
+        "conversation:read",
         "approval:read",
         "audit:read",
         "connector:plan",
     },
     "operator": {
         "evidence:create",
+        "evidence_attachment:create",
         "request:create",
+        "conversation:create",
+        "conversation:append",
         "execution:dry_run",
         "backup:create",
     },
@@ -28,6 +33,7 @@ ROLE_PERMISSIONS = {
     "admin": {
         "update:stage",
         "identity:manage",
+        "settings:read",
         "release:gate",
     },
 }

@@ -1,5 +1,34 @@
 # Release Notes
 
+## 0.4.0 Phase 22-28 Maturity Increment
+
+This release candidate increment makes release validation non-mutating and adds
+the next appliance maturity surfaces for conversation history, evidence
+attachments, admin settings, identity adapter status, EAAP validation planning,
+and plan-only image-build validation.
+
+Demo:
+
+- https://virtuarchitect.github.io/Enterprise-Orchestrator-Appliance/
+- Status: `live`
+- Static artifact: `docs/demo/index.html`
+
+Validated:
+
+- read-only release artifact validation
+- explicit release artifact regeneration command
+- tenant/operator-scoped conversation storage
+- hashed local evidence attachment metadata and storage
+- admin settings, identity status, and EAAP validation-plan endpoints
+- plan-only image-build validation and evidence template
+
+Boundaries:
+
+- Enterprise identity adapters are surfaced as status/planning paths only.
+- EAAP integration remains plan-handoff only unless configured.
+- Image build execution remains intentionally unimplemented in this reference.
+- No QCOW2, installer, or air-gapped appliance image has been produced.
+
 ## 0.3.0 Phase 16-21 Maturity Increment
 
 This release candidate increment replaces the prompt scaffold, expands the
